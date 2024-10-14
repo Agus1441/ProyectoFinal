@@ -15,12 +15,6 @@ const Login = () => {
       user,
       password
     };
-
-    try {
-      onNewEvent(newEvent);  
-    } catch (error) {
-      console.error("Error al crear el evento:", error);
-    }
   };
 
   return (
