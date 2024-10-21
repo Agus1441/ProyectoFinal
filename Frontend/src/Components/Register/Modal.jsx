@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-// src/components/RegisterModal.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Modal.css';
