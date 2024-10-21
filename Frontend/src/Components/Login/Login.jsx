@@ -22,7 +22,7 @@ const Login = () => {
         const userData = { username, password };
 
         try {
-            const response = await fetch('http://localhost:4000/login', {
+            const response = await fetch('http://localhost:3001/api', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
