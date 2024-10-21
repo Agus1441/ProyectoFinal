@@ -1,15 +1,31 @@
+/*
+Objeto Comentario para Referencia:
+{
+  "_id": "634f1b5c8f25c32a5cd55f9b",
+  "user": "634f1b2c8f25c32a5cd55f9a",
+  "post": "634f1b5c8f25c32a5cd55f9c",
+  "content": "Este es un comentario de ejemplo",
+  "createdAt": "2024-10-05T15:21:34.788Z"
+}
+*/
+import { getUser } from "../../Services/UsersService";
+
 const Comment = ({commentData}) => {
+
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        const FetchUser = async () => {
+            setUserData(await getUser(commentData.user));
+        }
+        FetchUser();
+    })
+
     return(
         <div>
-            {commentData.writerName + " " + commentData.content}
+            {userData.username + " " + commentData.content}
             <br />
-            {commentData.replies.map(reply => {
-                {reply.writerName + " " + reply.content}
-                <br />
-                {reply.lifetime}
-            })}
-            <br />
-            {commentData.lifetime}
+            {commentData.createdAt}
         </div>
     )
 }
