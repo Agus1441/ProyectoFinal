@@ -1,34 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Modal.css';
+import { register } from '../../Services/UsersService';
 
 const RegisterModal = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const userData = { username, password, email };
+        const userData = { username, email, password };
 
-        try {
-            const response = await fetch('http://localhost:3001/api', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
+        const { success, message, data } = await register(userData);
 
-            if (response.ok) {
-                console.log('Usuario registrado con éxito:', userData);
-                onClose();
-            } else {
-                console.error('Error al registrar el usuario:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error de red:', error);
+        if (success) {
+            console.log('Registro exitoso: ' + data.username);
+            handleClose();
+        } else {
+            setError(message);
         }
     };
 
@@ -71,6 +63,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                             required
                         />
                     </div>
+                    {error && <p className="error-message">{error}</p>}
                     <button className="btn" type="submit">Registrarse</button>
                     <button type="button" onClick={handleClose}>Cerrar</button>
                 </form>

@@ -19,6 +19,7 @@ export const register = async (registerData) => {
             return { 
                 success: true, 
                 message: 'Registro exitoso',
+                data
             };
         }
 

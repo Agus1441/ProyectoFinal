@@ -11,7 +11,8 @@ const Feed = () => {
     const fetchPosts = async () => {
       try {
         const response = await getPosts();
-        setPosts(response);
+        console.log(response);
+        setPosts(response.data);
       } catch (error) {
         console.error('Error al cargar las publicaciones:', error);
       } finally {
@@ -32,13 +33,13 @@ const Feed = () => {
         <div>No hay publicaciones disponibles</div>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className={styles['feed-item']}>
+          <div key={post._id} className={styles['feed-item']}>
             <Post
               user={post.user}
-              image={post.image}
-              caption={post.caption}
+              caption={post.content}
               likes={post.likes}
-              comments={post.comments}
+              createdAt={post.createdAt}
+              postId={post._id}
             />
           </div>
         ))
