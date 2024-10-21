@@ -1,19 +1,18 @@
 import React from "react";
 import './MyProfile.css'; 
 
-
 const MyProfile = () => {
   const user = {
     name: "Mateo",
     username: "mateo123",
-    bio: "Amante de la informática y los videojuegos. Peñarol es mi pasión.",
+    bio: "Estudiante en UCU.",
     profilePicture: "https://via.placeholder.com/150", 
 
-    //simulacion de posts
+    //posts de ejemplo
     posts: [
       {
         id: 1,
-        imageUrl: "https://via.placeholder.com/300",
+        imageUrl: "https://via.placeholder.com/300", 
         caption: "Mi primer post",
       },
       {
