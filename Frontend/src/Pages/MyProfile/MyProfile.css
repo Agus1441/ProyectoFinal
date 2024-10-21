@@ -1,39 +1,106 @@
+/* Contenedor general del perfil */
 .profile {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
   }
   
   .profile-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 20px;
   }
   
   .profile-picture {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin-right: 20px;
+    object-fit: cover;
+    margin-bottom: 10px;
   }
   
   .profile-info h2 {
     margin: 0;
+    font-size: 18px;
+    font-weight: bold;
   }
   
-  .profile-posts {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+  .profile-info p {
+    margin: 5px 0;
+    color: #8e8e8e;
+    font-size: 14px;
   }
   
-  .profile-post {
+  /* Stats */
+  .profile-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+  }
+  
+  .profile-stats div {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .post-image {
+  .profile-stats span {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .profile-stats p {
+    margin: 0;
+    font-size: 12px;
+    color: #000;
+  }
+  
+  /* Botón de editar perfil */
+  .profile-edit-button {
+    background-color: #fafafa;
+    border: 1px solid #dbdbdb;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #262626;
+    cursor: pointer;
+  }
+  
+  .profile-edit-button:hover {
+    background-color: #efefef;
+  }
+  
+  /* Posts */
+  .profile-posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+  
+  .profile-post {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .profile-post img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Efecto sutil al pasar el cursor por las imágenes */
+  .profile-post:hover img {
+    transform: scale(1.05); /* Ligeramente más grande */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombrado suave */
+  }
+  
+  .profile-post p {
+    display: none;
   }
   
