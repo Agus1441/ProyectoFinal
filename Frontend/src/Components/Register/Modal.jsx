@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Modal.css';
 
 const RegisterModal = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -30,7 +32,12 @@ const RegisterModal = ({ isOpen, onClose }) => {
         }
     };
 
-    if (!isOpen) return null;
+    const handleClose = () => {
+        onClose();  
+        navigate('/');  
+    };
+
+    if (!isOpen) return null; 
 
     return (
         <div className="modal-overlay">
@@ -65,7 +72,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                         />
                     </div>
                     <button className="btn" type="submit">Registrarse</button>
-                    <button type="button" onClick={onClose}>Cerrar</button>
+                    <button type="button" onClick={handleClose}>Cerrar</button>
                 </form>
             </div>
         </div>

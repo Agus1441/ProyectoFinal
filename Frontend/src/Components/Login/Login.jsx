@@ -60,10 +60,18 @@ const Login = () => {
                             required 
                         />
                     </div>
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message">{error}</p>} 
                     <button className="btn" type="submit">Iniciar Sesión</button>
-                    <button className="btn" type="button" onClick={() => navigate('/register')}>Registrarse</button>
-                    <p className="message">¿No tienes una cuenta? <a href="#" onClick={() => setIsModalOpen(true)}>Regístrate</a></p>
+                    <p className="message">
+                    ¿No tienes una cuenta? 
+                    <a href="/register" onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/register', { state: { openModal: true } });
+                    }}>
+                        Registrarse
+                    </a>
+                    </p>
+
                 </form>
             </div>
             <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import RegisterModal from '../../Components/Register/Modal';
+
 
 const RegisterPage = () => {
+    const location = useLocation();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (location.state?.openModal) {
+            setIsModalOpen(true);
+        }
+    }, [location.state]);
+
     return (
         <div>
-            <h1>Página de Registro</h1>
-            <p>Aquí puedes implementar tu formulario de registro o cualquier contenido que necesites.</p>
+            <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };

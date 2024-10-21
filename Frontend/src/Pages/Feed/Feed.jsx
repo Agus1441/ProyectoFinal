@@ -1,55 +1,50 @@
-import { useEffect, useState } from "react";
-import Post from "../../Components/Post/Post";
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import { getPosts } from "../../Services/PostsService";
+import React, { useState, useEffect } from 'react';
+import Post from '../../Components/Post/Post';
+import { getPosts } from '../../Services/PostsService';
+import styles from './feed.module.css';
 
 const Feed = () => {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const data = await getPosts();
-                setPosts(data);
-            } catch (error) {
-                console.error("Error al obtener los posts:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
-    // Función para ordenar los posts en orden cronológico
-    const ordenCronologico = (list) => {
-        return list.sort((a, b) => new Date(b.date) - new Date(a.date));
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await getPosts();
+        setPosts(response);
+      } catch (error) {
+        console.error('Error al cargar las publicaciones:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const testButtons = [
-        {
-            image: "",
-            altText: "Botón de Prueba",
-            action: () => {
-                alert("¡Clickeaste el botón de prueba! :D");
-            },
-        },
-    ];
+    fetchPosts();
+  }, []);
 
-    if (loading) return <p>Cargando posts...</p>; // Muestra un mensaje mientras carga
+  if (loading) {
+    return <div>Cargando publicaciones...</div>;
+  }
 
-    console.log(posts);
-    return (
-        <>
-            <Header title="Fakestagram" buttons={testButtons} />
-            {ordenCronologico(posts).map((post) => (
-                <Post key={post.id} postData={post} />
-            ))}
-            <Footer />
-        </>
-    );
+  return (
+    <div className={styles['feed-container']}>
+      {posts.length === 0 ? (
+        <div>No hay publicaciones disponibles</div>
+      ) : (
+        posts.map((post) => (
+          <div key={post.id} className={styles['feed-item']}>
+            <Post
+              user={post.user}
+              image={post.image}
+              caption={post.caption}
+              likes={post.likes}
+              comments={post.comments}
+            />
+          </div>
+        ))
+      )}
+    </div>
+  );
 };
 
 export default Feed;
