@@ -1,17 +1,16 @@
-/* Modal.css */
 .CustomModal {
     padding: 20px;
     border-radius: 10px;
     background-color: #2a0c0c;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más sutil */
-    max-width: 400px; /* Limita el ancho del modal */
-    margin: 20px; /* Añade margen para mejorar el espaciado */
-    transition: transform 0.3s ease; /* Suaviza la animación */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 20px;
+    transition: transform 0.3s ease;
 }
 
 .Overlay {
     background-color: rgba(0, 0, 0, 0.75);
-    position: fixed; /* Asegura que la superposición cubra toda la pantalla */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -34,7 +33,7 @@
 }
 
 .textbox input:focus {
-    border-color: #007bff; /* Cambia el color de foco */
+    border-color: #007bff;
     outline: none;
 }
 
@@ -46,15 +45,15 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s; /* Suaviza la transición del color */
-    font-weight: bold; /* Texto en negrita */
+    transition: background-color 0.3s;
+    font-weight: bold;
 }
 
 .btn:hover {
-    background-color: #0056b3; /* Cambia el color al pasar el mouse */
+    background-color: #0056b3;
 }
 
 .btn:active {
-    transform: scale(0.95); /* Efecto de pulsar el botón */
+    transform: scale(0.95);
 }
 

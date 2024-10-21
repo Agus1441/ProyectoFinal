@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-// src/components/RegisterModal.js
 import React, { useState } from 'react';
 import './Modal.css';
 
@@ -11,7 +8,6 @@ const RegisterModal = ({ isOpen, onClose }) => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica de registro
         const userData = { username, password, email };
 
         try {
@@ -25,7 +21,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
 
             if (response.ok) {
                 console.log('Usuario registrado con éxito:', userData);
-                onClose(); // Cierra el modal al registrar con éxito
+                onClose();
             } else {
                 console.error('Error al registrar el usuario:', response.statusText);
             }
@@ -34,7 +30,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
         }
     };
 
-    if (!isOpen) return null; // No renderiza el modal si no está abierto
+    if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">

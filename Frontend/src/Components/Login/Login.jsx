@@ -1,23 +1,20 @@
-/* eslint-disable no-unused-vars */
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import RegisterModal from './../Register/Modal'; // Importar el componente de registro
+import RegisterModal from './../Register/Modal';
 import './../Register/Modal.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [error, setError] = useState(''); // Estado para manejar el mensaje de error
-    const navigate = useNavigate(); // Inicializar el hook
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Iniciando sesión con:', username, password);
         
-        // Aquí deberías realizar la autenticación con el servidor
         const userData = { username, password };
 
         try {
@@ -30,10 +27,8 @@ const Login = () => {
             });
 
             if (response.ok) {
-                // Si la autenticación es exitosa, redirigir al dashboard
                 navigate('/dashboard');
             } else {
-                // Si hay un error, mostrar mensaje de error
                 setError('Usuario o contraseña incorrectos.');
             }
         } catch (error) {
@@ -65,9 +60,9 @@ const Login = () => {
                             required 
                         />
                     </div>
-                    {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
+                    {error && <p className="error-message">{error}</p>}
                     <button className="btn" type="submit">Iniciar Sesión</button>
-                    <button className="btn" type="button" onClick={() => navigate('/register')}>Registrarse</button> {/* Botón para redirigir a registro */}
+                    <button className="btn" type="button" onClick={() => navigate('/register')}>Registrarse</button>
                     <p className="message">¿No tienes una cuenta? <a href="#" onClick={() => setIsModalOpen(true)}>Regístrate</a></p>
                 </form>
             </div>

@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
-import Login from './../../Components/Login/Login'; // Importar el componente Login
+import Login from './../../Components/Login/Login';
 
 const LoginPage = () => {
     return (

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// src/components/RegisterPage.js
 import React from 'react';
 
 const RegisterPage = () => {
