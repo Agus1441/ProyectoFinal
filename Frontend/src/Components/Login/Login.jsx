@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-// src/Login.js
-// src/Login.js
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Login.css';
-import RegisterModal from './Modal';
-import './Modal.css';
+import RegisterModal from './../Register/Modal'; // Importar el componente de registro
+import './../Register/Modal.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
