@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-// src/Login.js
-// src/Login.js
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Login.css';
-import RegisterModal from './Modal';
-import './Modal.css';
+import RegisterModal from './../Register/Modal'; // Importar el componente de registro
+import './../Register/Modal.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -18,7 +17,6 @@ const Login = () => {
         e.preventDefault();
         console.log('Iniciando sesión con:', username, password);
         
-        // Aquí deberías realizar la autenticación con el servidor
         const userData = { username, password };
 
         try {
@@ -31,10 +29,8 @@ const Login = () => {
             });
 
             if (response.ok) {
-                // Si la autenticación es exitosa, redirigir al dashboard
                 navigate('/dashboard');
             } else {
-                // Si hay un error, mostrar mensaje de error
                 setError('Usuario o contraseña incorrectos.');
             }
         } catch (error) {
@@ -66,10 +62,18 @@ const Login = () => {
                             required 
                         />
                     </div>
-                    {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
+                    {error && <p className="error-message">{error}</p>} 
                     <button className="btn" type="submit">Iniciar Sesión</button>
-                    <button className="btn" type="button" onClick={() => navigate('/register')}>Registrarse</button> {/* Botón para redirigir a registro */}
-                    <p className="message">¿No tienes una cuenta? <a href="#" onClick={() => setIsModalOpen(true)}>Regístrate</a></p>
+                    <p className="message">
+                    ¿No tienes una cuenta? 
+                    <a href="/register" onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/register', { state: { openModal: true } });
+                    }}>
+                        Registrarse
+                    </a>
+                    </p>
+
                 </form>
             </div>
             <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

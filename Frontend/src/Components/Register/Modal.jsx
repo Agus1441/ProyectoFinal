@@ -2,16 +2,17 @@
 /* eslint-disable no-unused-vars */
 // src/components/RegisterModal.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import './Modal.css';
 
 const RegisterModal = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const navigate = useNavigate(); // Inicializar useNavigate
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica de registro
         const userData = { username, password, email };
 
         try {
@@ -34,7 +35,12 @@ const RegisterModal = ({ isOpen, onClose }) => {
         }
     };
 
-    if (!isOpen) return null; // No renderiza el modal si no está abierto
+    const handleClose = () => {
+        onClose();  
+        navigate('/');  
+    };
+
+    if (!isOpen) return null; 
 
     return (
         <div className="modal-overlay">
@@ -69,7 +75,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                         />
                     </div>
                     <button className="btn" type="submit">Registrarse</button>
-                    <button type="button" onClick={onClose}>Cerrar</button>
+                    <button type="button" onClick={handleClose}>Cerrar</button>
                 </form>
             </div>
         </div>
