@@ -5,7 +5,7 @@ import Login from './../../Components/Login/Login'; // Importar el componente Lo
 const LoginPage = () => {
     return (
         <div>
-            <Login /> {/* Renderizar el componente Login */}
+            <Login /> 
         </div>
     );
 };
