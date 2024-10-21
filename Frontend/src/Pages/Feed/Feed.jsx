@@ -48,3 +48,5 @@ const Feed = () => {
 };
 
 export default Feed;
+
+// Hay que parsear las barras que Windows trae como \\ para que sean /
