@@ -1,12 +1,22 @@
 /* eslint-disable no-unused-vars */
-// src/components/RegisterPage.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import RegisterModal from '../../Components/Register/Modal';
 
 const RegisterPage = () => {
+    const location = useLocation();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // useEffect para abrir el modal si el estado es verdadero
+    useEffect(() => {
+        if (location.state?.openModal) {
+            setIsModalOpen(true);
+        }
+    }, [location.state]);
+
     return (
         <div>
-            <h1>Página de Registro</h1>
-            <p>Aquí puedes implementar tu formulario de registro o cualquier contenido que necesites.</p>
+            <RegisterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
