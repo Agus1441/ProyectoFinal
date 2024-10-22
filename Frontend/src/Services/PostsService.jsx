@@ -22,6 +22,15 @@ export const getPosts = async () => {
 
         if (res.ok) {
             const posts = await res.json();
+            posts.push({
+                "_id": "634f1b5c8f25c32a5cd55f9b",
+                "user": "67164d72b74dbed6366e3f24",
+                "content": "Este es un post de ejemplo",
+                "likes": [
+                  "67164d72b74dbed6366e3f24"
+                ],
+                "createdAt": "2024-10-05T15:21:34.788Z"
+              })
             return { 
                 success: true, 
                 message: 'Posts obtenidos con éxito', 

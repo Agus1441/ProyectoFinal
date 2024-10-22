@@ -16,7 +16,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/myfeed' element={<Feed />} />
           <Route path='/myprofile' element={<MyProfile />} />
-          <Route path='/myprofile/posts/:id' element={<Post />} />
+          <Route path='/posts/:id' element={<Post />} />
           <Route path='/profile/:id' element={<Profile />} />
         </Routes>
       </BrowserRouter>
