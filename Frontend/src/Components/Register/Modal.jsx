@@ -67,8 +67,6 @@ const RegisterModal = ({ isOpen, onClose }) => {
                     <button className="btn" type="submit">Registrarse</button>
                     <button type="button" onClick={handleClose}>Cerrar</button>
                 </form>
-                {successMessage && <p className="success-message">{successMessage}</p>} 
-                {errorMessage && <p className="error-message">{errorMessage}</p>} 
             </div>
         </div>
     );
