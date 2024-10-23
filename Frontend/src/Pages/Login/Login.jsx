@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../../Services/UsersService';
 import RegisterModal from '../../Components/Register/Modal';
@@ -6,11 +6,19 @@ import './Login.css';
 import './../../Components/Register/Modal.css';
 
 const Login = () => {
+    
+    //Redireccionamiento al feed si ya está loggeado
+    const navigate = useNavigate();
+    useEffect(() => {
+        
+        if (localStorage.getItem('token')){navigate('/myfeed');}
+    }, [navigate]);
+
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

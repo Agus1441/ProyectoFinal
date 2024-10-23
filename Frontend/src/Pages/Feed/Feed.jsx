@@ -3,15 +3,18 @@ import Post from '../../Components/Post/Post';
 import { getPosts } from '../../Services/PostsService';
 import styles from './feed.module.css';
 import Footer from '../../Components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await getPosts();
+        if(response.message == "Token no disponible. Por favor, inicia sesión."){navigate('/')}
         console.log(response);
         setPosts(response.data);
       } catch (error) {

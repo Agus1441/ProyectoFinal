@@ -178,9 +178,10 @@ const Profile = () => {
 
             <div className="profile-posts">
                 {userPosts.map((post) => (
-                    <div key={post.id} className="profile-post">
-                        <img src={post.imageUrl} alt="Post" className="post-image" />
-                    </div>
+                    <div key={post._id} className="profile-post">
+                    <img src={post.image} alt="Post" className="post-image" />
+                    {post.content}
+                  </div>
                 ))}
             </div>
 
