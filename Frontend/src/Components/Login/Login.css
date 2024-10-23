@@ -63,3 +63,19 @@ body {
         width: 95%;
     }
 }
+
+.login-box {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.textbox {
+    width: 100%; 
+    display: flex;
+    justify-content: center; 
+}
+
+.textbox input {
+    width: 90%; 
+}

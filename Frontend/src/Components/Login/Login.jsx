@@ -65,12 +65,12 @@ const Login = () => {
                     {error && <p className="error-message">{error}</p>} 
                     <button className="btn" type="submit">Iniciar Sesión</button>
                     <p className="message">
-                    ¿No tienes una cuenta? 
+                    ¿No tienes una cuenta?|
                     <a href="/register" onClick={(e) => {
                         e.preventDefault();
                         navigate('/register', { state: { openModal: true } });
                     }}>
-                        Registrarse
+                         Registrarse
                     </a>
                     </p>
 
