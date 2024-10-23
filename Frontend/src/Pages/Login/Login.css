@@ -40,9 +40,16 @@ body {
     color: #fff; 
 }
 
+
+.textbox input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
 .btn {
     width: 100%;
     padding: 10px;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -50,20 +57,33 @@ body {
     transition: background-color 0.3s;
 }
 
+.btn:hover {
+    background-color: #0056b3;
+}
 
 .message {
     text-align: center;
     margin-top: 15px;
 }
 
-
-/* Ajustes generales para dispositivos móviles */
-@media (max-width: 600px) {
-    .login-box {
-        width: 95%;
-    }
+.message span {
+    color: #007bff;
+    cursor: pointer;
 }
 
+.Modal {
+    background: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.Overlay {
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .login-box {
     display: flex;
     flex-direction: column; 

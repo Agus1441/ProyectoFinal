@@ -1,13 +1,12 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import RegisterModal from '../../Components/Register/Modal';
+
 
 const RegisterPage = () => {
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // useEffect para abrir el modal si el estado es verdadero
     useEffect(() => {
         if (location.state?.openModal) {
             setIsModalOpen(true);

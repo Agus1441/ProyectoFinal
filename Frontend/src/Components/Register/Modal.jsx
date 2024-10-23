@@ -1,65 +1,26 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import { useNavigate } from 'react-router-dom';
 import './Modal.css';
+import { register } from '../../Services/UsersService';
 
 const RegisterModal = ({ isOpen, onClose }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [successMessage, setSuccessMessage] = useState(''); // Estado para el mensaje de éxito
-    const [errorMessage, setErrorMessage] = useState(''); // Estado para el mensaje de error
-    const navigate = useNavigate(); // Inicializar useNavigate
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const userData = { username, password, email };
+        const userData = { username, email, password };
 
-        try {
-            // Realizar la solicitud POST para registrar al usuario
-            const registerResponse = await fetch('http://localhost:3001/api/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
+        const { success, message, data } = await register(userData);
 
-            const responseData = await registerResponse.json(); // Obtener la respuesta JSON
-
-            if (registerResponse.ok) {
-                console.log('Usuario registrado con éxito:', userData);
-                setSuccessMessage('Registro exitoso. ¡Ahora puedes iniciar sesión!'); // Establecer el mensaje de éxito
-                setErrorMessage(''); // Limpiar el mensaje de error
-
-                // Intentar loguear al usuario automáticamente después de registrarlo
-                const loginResponse = await fetch('http://localhost:3001/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ username, password }), // Usar las mismas credenciales
-                });
-
-                if (loginResponse.ok) {
-                    console.log('Usuario logueado con éxito');
-                    onClose(); // Cierra el modal
-                    navigate('/'); // Redirigir a la página principal
-                } else {
-                    const loginErrorData = await loginResponse.json();
-                    console.error('Error al iniciar sesión:', loginErrorData);
-                    setErrorMessage('Error al iniciar sesión. Inténtalo de nuevo.'); // Mensaje de error
-                }
-            } else {
-                console.error('Error al registrar el usuario:', responseData);
-                setErrorMessage(`Error al registrar: ${responseData.message || 'Inténtalo de nuevo.'}`); // Mensaje de error
-                setSuccessMessage(''); // Limpiar el mensaje de éxito
-            }
-        } catch (error) {
-            console.error('Error de red:', error);
-            setErrorMessage('Error de red. Por favor, intenta más tarde.'); // Mensaje de error
-            setSuccessMessage(''); // Limpiar el mensaje de éxito
+        if (success) {
+            console.log('Registro exitoso: ' + data.username);
+            handleClose();
+        } else {
+            setError(message);
         }
     };
 
@@ -102,6 +63,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                             required
                         />
                     </div>
+                    {error && <p className="error-message">{error}</p>}
                     <button className="btn" type="submit">Registrarse</button>
                     <button type="button" onClick={handleClose}>Cerrar</button>
                 </form>
