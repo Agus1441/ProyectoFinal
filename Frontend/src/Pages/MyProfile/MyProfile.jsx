@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './MyProfile.css'; 
 import Footer from "../../Components/Footer/Footer";
+import { getUser } from "../../Services/UsersService";
+import { useNavigate } from "react-router-dom";
+import { getPosts } from "../../Services/PostsService";
 
 const MyProfile = () => {
+  /* Usuario de Ejemplo
   const [user, setUser] = useState({
     name: "Mateo",
     username: "mateo123",
@@ -33,6 +37,40 @@ const MyProfile = () => {
       },
     ],
   });
+  */
+
+  const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+  console.log(userId);
+  const [user, setUser] = useState({});
+  const [myPosts, setMyPosts] = useState([]);
+
+  useEffect(() => {
+    if(!userId){
+      console.log("Deberia ir al login")
+      navigate('/')
+    }
+    else{
+      const fetchUser = async () => {
+        const userObject = await getUser(userId);
+        setUser(userObject.data);
+      }
+      const fetchPosts = async() => {
+        const postsObject = await getPosts();
+        postsObject.data.forEach(post => {
+          if(post.user === userId){
+            setMyPosts(prev => [...prev, post]);
+          }
+        });
+      }
+      fetchUser();
+      fetchPosts();
+    }
+  }, [])
+  
+
+
+  
 
   // Estado para controlar el modal y los datos de la nueva publicación
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,6 +136,9 @@ const MyProfile = () => {
     closeModal();
   };
 
+  if(myPosts.length == 0) return <div>Cargando Datos...</div>
+  console.log(myPosts);
+
   return (
     <div className="profile">
       <div className="profile-header">
@@ -124,9 +165,10 @@ const MyProfile = () => {
       </div>
 
       <div className="profile-posts">
-        {user.posts.map((post) => (
-          <div key={post.id} className="profile-post">
-            <img src={post.imageUrl} alt="Post" className="post-image" />
+        {myPosts.map((post) => (
+          <div key={post._id} className="profile-post">
+            <img src={post.image} alt="Post" className="post-image" />
+            {post.content}
           </div>
         ))}
       </div>

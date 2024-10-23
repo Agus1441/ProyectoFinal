@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from '../../Components/Post/Post';
 import { getPosts } from '../../Services/PostsService';
 import styles from './feed.module.css';
+import Footer from '../../Components/Footer/Footer';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -44,6 +45,7 @@ const Feed = () => {
           </div>
         ))
       )}
+      <Footer></Footer>
     </div>
   );
 };

@@ -51,11 +51,11 @@ export const login = async (loginData) => {
 
         if (res.ok) {
             const data = await res.json();
-
+            console.log(data);
             //Manejo de Token con Local Storage
-            if (data.token) {
+            if (data.token && data._id) {
                 localStorage.setItem('token', data.token);
-
+                localStorage.setItem('userId', data._id);
                 return {
                     success: true,
                     message: 'Login exitoso',
@@ -64,7 +64,7 @@ export const login = async (loginData) => {
             } else {
                 return { 
                     success: false, 
-                    message: 'Token no recibido en la respuesta' 
+                    message: 'Login fallido' 
                 };
             }
         }
