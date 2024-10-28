@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import './Footer.css';
+import Logout from "../Logout/logout";
 
 const Footer = ({ onOpenModal }) => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Footer = ({ onOpenModal }) => {
             <button onClick={() => { navigate("/myprofile") }}>
                 <img src="https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg" alt="Profile" className="profile-picture" />
             </button>
+            <Logout></Logout>
         </div>
     );
 };
