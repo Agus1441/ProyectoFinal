@@ -49,6 +49,7 @@ const Feed = () => {
         ))
       )}
       <Footer></Footer>
+      
     </div>
   );
 };

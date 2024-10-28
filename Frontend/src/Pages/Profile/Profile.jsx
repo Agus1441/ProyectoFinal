@@ -44,6 +44,12 @@ const Profile = () => {
     const [user, setUser] = useState(null);
     const [userPosts, setUserPosts] = useState(null);
 
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            navigate('/'); // Redirige a la página de login
+        }
+    }, [navigate]);
+
     // Redirigir si no hay userId
     useEffect(() => {
         console.log("Voy a cargar el usuario")
