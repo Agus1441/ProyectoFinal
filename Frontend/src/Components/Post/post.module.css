@@ -1,0 +1,83 @@
+.post {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    color: #4a4a4a; /* Gris oscuro para el texto */
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-image {
+    width: 30px; /* Tamaño reducido aún más */
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between; /* Espaciado entre Like y Comentar */
+    margin-top: 8px;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: #4a4a4a; /* Color gris oscuro */
+}
+
+.comment-section {
+    color: grey;
+    margin-top: 8px;
+}
+
+.error-message {
+    color: red;
+}
+
+.comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.comment-input {
+    flex-grow: 1;
+    padding: 6px;
+    border: 1px solid #4a4a4a; /* Borde gris oscuro */
+    border-radius: 4px;
+    background-color: #fff; /* Fondo blanco */
+    color: #4a4a4a; /* Texto gris oscuro */
+}
+
+.submit-button {
+    padding: 6px 12px;
+    background-color: #fff; /* Fondo blanco */
+    color: #4a4a4a; /* Texto gris oscuro */
+    border: 1px solid #4a4a4a; /* Borde gris oscuro */
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 8px; /* Más separación del input */
+}

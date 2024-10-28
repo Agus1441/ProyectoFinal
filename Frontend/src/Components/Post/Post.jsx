@@ -1,29 +1,14 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import { getUser } from "../../Services/UsersService";
 import { commentPost, getPosts, likePost } from "../../Services/PostsService";
-import { useParams } from "react-router-dom";
-
-/*
-    Post de Ejemplo:
-    {
-    "_id": "634f1b5c8f25c32a5cd55f9b",
-    "user": "634f1b2c8f25c32a5cd55f9a",
-    "content": "Este es un post de ejemplo",
-    "likes": [
-        "634f1b2c8f25c32a5cd55f9a"
-    ],
-    "createdAt": "2024-10-05T15:21:34.788Z"
-    }
-*/
-
+import styles from "./post.module.css";
 
 const Post = ({ postId }) => {
-    //Sí estoy en una página de post individual, cargo la id de la URL en la prop.
-    if (window.location.href.startsWith("http://localhost:5173/posts/")){
+    if (window.location.href.startsWith("http://localhost:5173/posts/")) {
         const { id } = useParams();
-        if(id) postId = id;
-        console.log("Id obtenida por URL: " + postId);
+        if (id) postId = id;
     }
 
     const [postData, setPostData] = useState(null);
@@ -35,20 +20,15 @@ const Post = ({ postId }) => {
     const [error, setError] = useState('');
     const exampleImage = "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg";
 
-
-
-
-    // Cargar datos del usuario al montar el componente
     useEffect(() => {
         const fetchData = async () => {
             const response = await getPosts();
-            if (response.data){
+            if (response.data) {
                 response.data.forEach(async post => {
-                    console.log(postId == post._id)
-                    if(post._id == postId){
+                    if (post._id == postId) {
                         setPostData(post);
                         const data = await getUser(post.user);
-                        if (data) setUserData(data);   
+                        if (data) setUserData(data);
                     }
                 });
             }
@@ -57,9 +37,6 @@ const Post = ({ postId }) => {
         fetchData();
     }, []);
 
-
-
-    // Manejar el like del post
     const handleLike = async () => {
         const response = await likePost(postId);
         if (response.success) {
@@ -69,85 +46,82 @@ const Post = ({ postId }) => {
         }
     };
 
-
-
-
-
-    // Manejar envío de comentario
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         const result = await commentPost(newComment, postId);
         if (result.success) {
             setNewComment('');
             setCommenting(false);
-        } else { 
+        } else {
             setError(result.message);
         }
     };
 
-
-    if(loading) return <div>Cargando Datos...</div>
-    if(!postData || !userData) return <div>No se pudo encontrar la publicación :C</div> 
+    if (loading) return <div>Cargando Datos...</div>;
+    if (!postData || !userData) return <div>No se pudo encontrar la publicación :C</div>;
 
     return (
-        <div className="post">
-            <img src={/*userData.profpic*/exampleImage} alt={"Foto de Perfil de " + userData.username} />
-            <h2>{userData.username}</h2>
+        <div className={styles.post}>
+            <div className={styles.profileInfo}>
+                <img
+                    src={exampleImage}
+                    alt={"Foto de Perfil de " + userData.username}
+                    className={styles.profileImage}
+                />
+                <h2 className={styles.username}>{userData.username}</h2>
+            </div>
 
             <select name="Opciones de Post">
                 <option value="Compartir">Compartir</option>
                 <option value="Reportar">Reportar</option>
             </select>
 
-            <img src={`./posts/${postId}.jpg`} alt={`Publicación ${postId}`} />
+            <img
+                src={`./posts/${postId}.jpg`}
+                alt={`Publicación ${postId}`}
+                className={styles.postImage}
+            />
 
+            <div className={styles.actions}>
+                <button onClick={handleLike} className={styles.actionButton}>
+                    {liked ? (
+                        <svg width="24" height="24" fill="red" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                    ) : (
+                        <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                    )}
+                </button>
 
-            <button onClick={handleLike}>
-                {liked ? "Liked" : "Like"}
-            </button>
-
-
-            <button onClick={() => setCommenting(!commenting)}>
-                Comentar
-            </button>
-
+                <button onClick={() => setCommenting(!commenting)} className={styles.actionButton}>
+                    <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z" />
+                    </svg>
+                </button>
+            </div>
 
             <p>{postData.likes.length} Likes</p>
-
             <p>{userData.username + " " + postData.content}</p>
 
-            {/*Falta un endpoint para pedirle los comentarios al backend*/}
-            <div style={{ color: 'grey' }}>Ver los {/*comments.length*/} comentarios</div>
+            <div className={styles.commentSection}>Ver los {/*comments.length*/} comentarios</div>
 
             {commenting && (
-                <form onSubmit={handleCommentSubmit}>
+                <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
                     <input
                         type="text"
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Escribe un comentario..."
                         required
+                        className={styles.commentInput}
                     />
-                    <button type="submit">Enviar</button>
+                    <button type="submit" className={styles.submitButton}>Enviar</button>
                 </form>
             )}
 
-            {
-                /* Falta un endpoint para pedirle los comentarios al backend
-
-                <div className="comments">
-                    {comments.length > 0 ? (
-                        comments.map((comment, index) => (
-                            <Comment key={index} commentData={comment} />
-                        ))
-                    ) : (
-                        <p>No hay comentarios.</p>
-                    )}
-                </div>
-                */
-            }
-
-            {error && <p className="error-message">{error}</p>}
+            {error && <p className={styles.errorMessage}>{error}</p>}
         </div>
     );
 };
