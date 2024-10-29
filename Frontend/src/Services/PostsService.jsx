@@ -11,7 +11,6 @@ export const getPosts = async () => {
         const res = await fetch(`${URL}posts/feed`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
         });
@@ -63,7 +62,7 @@ export const commentPost = async (comment, postID) => {
 
         const JSONComment = { content: comment };
 
-        const res = await fetch(`${URL}posts/${postID}/comment`, {
+        const res = await fetch(`${URL}posts/${postID}/comments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,6 +94,86 @@ export const commentPost = async (comment, postID) => {
     }
 };
 
+
+
+
+
+
+export const removeComment = async (commentID, postID) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            return { success: false, message: 'Token no disponible. Por favor, inicia sesión.' };
+        }
+
+        const res = await fetch(`${URL}posts/${postID}/comments/${commentID}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (res.status === 403) {
+            return { success: false, message: 'No tienes permiso para eliminar este comentario.' };
+        }
+
+        if (res.status === 404) {
+            return { success: false, message: 'Post o comentario no encontrado.' };
+        }
+
+        if (res.status === 200) {
+            const data = await res.json();
+            return { 
+                success: true, 
+                message: 'Comentario eliminado exitosamente', 
+                data 
+            };
+        }
+
+        return { success: false, message: `Error inesperado: ${res.status}` };
+    } catch (error) {
+        return { success: false, message: `Error de conexión: ${error.message}` };
+    }
+};
+
+
+
+
+
+export const getComment = async (commentID) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            return { success: false, message: 'Token no disponible. Por favor, inicia sesión.' };
+        }
+
+        const res = await fetch(`${URL}posts/comments/${commentID}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (res.status === 404) {
+            return { success: false, message: 'Comentario no encontrado' };
+        }
+
+        if (res.status === 201) {
+            const data = await res.json();
+            return { 
+                success: true, 
+                message: 'Comentario obtenido exitosamente', 
+                data 
+            };
+        }
+
+        return { success: false, message: `Error inesperado: ${res.status}` };
+    } catch (error) {
+        return { success: false, message: `Error de conexión: ${error.message}` };
+    }
+}
 
 
 
@@ -139,4 +218,44 @@ export const likePost = async (postID) => {
     }
 };
 
+
+
+
+export const removeLike = async (postID) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            return { success: false, message: 'Token no disponible. Por favor, inicia sesión.' };
+        }
+
+        const res = await fetch(`${URL}posts/${postID}/like`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        if (res.status === 400) {
+            return { success: false, message: 'El Usuario no ha dado like a este post.' };
+        }
+
+        if (res.status === 404) {
+            return { success: false, message: 'Post no encontrado.' };
+        }
+
+        if (res.status === 200) {
+            const data = await res.json();
+            return { 
+                success: true, 
+                message: 'Like eliminado exitosamente', 
+                data 
+            };
+        }
+
+        return { success: false, message: `Error inesperado: ${res.status}` };
+    } catch (error) {
+        return { success: false, message: `Error de conexión: ${error.message}` };
+    }
+};
 
