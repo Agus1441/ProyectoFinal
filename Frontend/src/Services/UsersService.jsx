@@ -34,7 +34,6 @@ export const register = async (registerData) => {
 
 
 
-
 export const login = async (loginData) => {
     try {
         const res = await fetch(`${URL}auth/login`, {
@@ -74,12 +73,6 @@ export const login = async (loginData) => {
         return { success: false, message: `Error de conexión: ${error.message}` };
     }
 };
-
-
-
-
-
-
 
 
 
