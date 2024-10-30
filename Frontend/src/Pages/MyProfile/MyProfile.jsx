@@ -52,15 +52,17 @@ const MyProfile = () => {
     }
     else{
       const fetchUser = async () => {
+        console.log(userId);
         const userObject = await getUser(userId);
         setUser(userObject.data);
       }
       const fetchPosts = async() => {
         const postsObject = await getPosts();
+        console.log(postsObject.data);
         postsObject.data.forEach(post => {
           if(post.user === userId){
             setMyPosts(prev => [...prev, post]);
-          }
+          } 
         });
       }
       fetchUser();
@@ -136,7 +138,7 @@ const MyProfile = () => {
     closeModal();
   };
 
-  if(myPosts.length == 0) return <div>Cargando Datos...</div>
+
   console.log(myPosts);
 
   return (
@@ -165,7 +167,7 @@ const MyProfile = () => {
       </div>
 
       <div className="profile-posts">
-        {myPosts.map((post) => (
+        {myPosts.length==0 && myPosts.map((post) => (
           <div key={post._id} className="profile-post">
             <img src={post.image} alt="Post" className="post-image" />
             {post.content}
