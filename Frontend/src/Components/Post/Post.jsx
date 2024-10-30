@@ -99,6 +99,7 @@ const Post = ({ postId }) => {
             </div>
 
             <img
+                style={{ borderRadius: "8px", width: "100%", height: "100%" }}
                 src={postData.image}
                 alt={`Publicación ${postId}`}
                 className={styles.postImage}
