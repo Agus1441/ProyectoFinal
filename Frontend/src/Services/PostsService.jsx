@@ -28,7 +28,8 @@ export const getPosts = async () => {
                 "likes": [
                   "67164d72b74dbed6366e3f24"
                 ],
-                "createdAt": "2024-10-05T15:21:34.788Z"
+                "createdAt": "2024-10-05T15:21:34.788Z",
+                "image": "https://i.pinimg.com/564x/67/61/a4/6761a4439c65d86e6fa0cd5c75a3679d.jpg"
               })
             return { 
                 success: true, 
