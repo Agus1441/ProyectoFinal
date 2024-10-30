@@ -9,13 +9,13 @@
     color: #4a4a4a; /* Gris oscuro para el texto */
 }
 
-.profile-info {
+.profileInfo {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.profile-image {
+.profileImage {
     width: 30px; /* Tamaño reducido aún más */
     height: 30px;
     border-radius: 50%;
@@ -27,7 +27,7 @@
     font-weight: bold;
 }
 
-.post-image {
+.postImage {
     width: 100%;
     height: auto;
     margin-top: 10px;
@@ -40,7 +40,7 @@
     margin-top: 8px;
 }
 
-.action-button {
+.actionButton {
     background: none;
     border: none;
     cursor: pointer;
@@ -48,22 +48,22 @@
     color: #4a4a4a; /* Color gris oscuro */
 }
 
-.comment-section {
+.commentSection {
     color: grey;
     margin-top: 8px;
 }
 
-.error-message {
+.errorMessage {
     color: red;
 }
 
-.comment-form {
+.commentForm {
     display: flex;
     gap: 8px;
     margin-top: 10px;
 }
 
-.comment-input {
+.commentInput {
     flex-grow: 1;
     padding: 6px;
     border: 1px solid #4a4a4a; /* Borde gris oscuro */
@@ -72,7 +72,7 @@
     color: #4a4a4a; /* Texto gris oscuro */
 }
 
-.submit-button {
+.submitButton {
     padding: 6px 12px;
     background-color: #fff; /* Fondo blanco */
     color: #4a4a4a; /* Texto gris oscuro */
