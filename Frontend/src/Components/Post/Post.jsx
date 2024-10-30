@@ -18,6 +18,7 @@ const Post = ({ postId }) => {
     const [liked, setLiked] = useState(false);
     const [commenting, setCommenting] = useState(false);
     const [error, setError] = useState('');
+    const [optionsVisible, setOptionsVisible] = useState(false);
     const exampleImage = "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg";
 
     useEffect(() => {
@@ -57,6 +58,14 @@ const Post = ({ postId }) => {
         }
     };
 
+    const toggleOptions = () => {
+        setOptionsVisible(!optionsVisible);
+    };
+
+    const closeOptions = () => {
+        setOptionsVisible(false);
+    };
+
     if (loading) return <div>Cargando Datos...</div>;
     if (!postData || !userData) return <div>No se pudo encontrar la publicación :C</div>;
 
@@ -69,15 +78,28 @@ const Post = ({ postId }) => {
                     className={styles.profileImage}
                 />
                 <h2 className={styles.username}>{userData.username}</h2>
-
-                <select name="Opciones de Post" className={styles.selectBox}>
-                    <option className={styles.option} value="Compartir">Compartir</option>
-                    <option className={styles.option} value="Reportar">Reportar</option>
-                </select>
             </div>
 
+            <button onClick={toggleOptions} className={styles.optionsButton}>
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <circle cx="5" cy="12" r="2" />
+                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="19" cy="12" r="2" />
+                </svg>
+            </button>
+
+            {optionsVisible && (
+                <div className={styles.modal}>
+                    <div className={styles.modalContent}>
+                        <span className={styles.close} onClick={closeOptions}>&times;</span>
+                        <button onClick={() => {/* lógica para compartir */}}>Compartir</button>
+                        <button onClick={() => {/* lógica para reportar */}}>Reportar</button>
+                    </div>
+                </div>
+            )}
+
             <img
-                src={`./posts/${postId}.jpg`}
+                src={postData.image}
                 alt={`Publicación ${postId}`}
                 className={styles.postImage}
             />
