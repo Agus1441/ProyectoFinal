@@ -175,3 +175,6 @@
   background-color: #333; 
 }
 
+.profile-header h1 {
+  color: #000; /* Cambia el color del texto a negro */
+}

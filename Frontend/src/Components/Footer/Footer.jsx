@@ -12,7 +12,6 @@ const Footer = ({ onOpenModal }) => {
                 <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Feed" className="icon" />
             </button>
 
-            {/* Botón centrado con ícono de cámara */}
             <button className="upload-button" onClick={onOpenModal}>
                 <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
             </button>
@@ -20,7 +19,6 @@ const Footer = ({ onOpenModal }) => {
             <button onClick={() => { navigate("/myprofile") }}>
                 <img src="https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg" alt="Profile" className="profile-picture" />
             </button>
-            <Logout></Logout>
         </div>
     );
 };
