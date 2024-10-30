@@ -69,12 +69,12 @@ const Post = ({ postId }) => {
                     className={styles.profileImage}
                 />
                 <h2 className={styles.username}>{userData.username}</h2>
-            </div>
 
-            <select name="Opciones de Post">
-                <option value="Compartir">Compartir</option>
-                <option value="Reportar">Reportar</option>
-            </select>
+                <select name="Opciones de Post">
+                    <option value="Compartir">Compartir</option>
+                    <option value="Reportar">Reportar</option>
+                </select>
+            </div>
 
             <img
                 src={`./posts/${postId}.jpg`}
