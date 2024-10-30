@@ -78,25 +78,25 @@ const Post = ({ postId }) => {
                     className={styles.profileImage}
                 />
                 <h2 className={styles.username}>{userData.username}</h2>
-            </div>
 
-            <button onClick={toggleOptions} className={styles.optionsButton}>
-                <svg width="20" height="20" viewBox="0 0 24 24">
-                    <circle cx="5" cy="12" r="2" />
-                    <circle cx="12" cy="12" r="2" />
-                    <circle cx="19" cy="12" r="2" />
-                </svg>
-            </button>
+                <button onClick={toggleOptions} className={styles.optionsButton}>
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                        <circle cx="5" cy="12" r="2" />
+                        <circle cx="12" cy="12" r="2" />
+                        <circle cx="19" cy="12" r="2" />
+                    </svg>
+                </button>
 
-            {optionsVisible && (
-                <div className={styles.modal}>
-                    <div className={styles.modalContent}>
-                        <span className={styles.close} onClick={closeOptions}>&times;</span>
-                        <button onClick={() => {/* lógica para compartir */}}>Compartir</button>
-                        <button onClick={() => {/* lógica para reportar */}}>Reportar</button>
+                {optionsVisible && (
+                    <div className={styles.modal}>
+                        <div className={styles.modalContent}>
+                            <span className={styles.close} onClick={closeOptions}>&times;</span>
+                            <button onClick={() => {/* lógica para compartir */ }} className={styles.submitButton}>Compartir</button>
+                            <button onClick={() => {/* lógica para reportar */ }} className={styles.submitButton}>Reportar</button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             <img
                 src={postData.image}
