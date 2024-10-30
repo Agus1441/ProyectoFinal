@@ -70,9 +70,9 @@ const Post = ({ postId }) => {
                 />
                 <h2 className={styles.username}>{userData.username}</h2>
 
-                <select name="Opciones de Post">
-                    <option value="Compartir">Compartir</option>
-                    <option value="Reportar">Reportar</option>
+                <select name="Opciones de Post" className={styles.selectBox}>
+                    <option className={styles.option} value="Compartir">Compartir</option>
+                    <option className={styles.option} value="Reportar">Reportar</option>
                 </select>
             </div>
 
