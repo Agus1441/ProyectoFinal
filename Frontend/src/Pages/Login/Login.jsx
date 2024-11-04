@@ -7,7 +7,7 @@ import './../../Components/Register/Modal.css';
 
 const Login = () => {
     
-    //Redireccionamiento al feed si ya está loggeado
+    //Redireccionamiento al feed si ya está loggeado 
     const navigate = useNavigate();
     useEffect(() => {
         
