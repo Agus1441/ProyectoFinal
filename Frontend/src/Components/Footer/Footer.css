@@ -5,7 +5,7 @@
   right: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
@@ -90,4 +90,9 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.logout-button {
+  position: relative;
+  top: -5px;
 }
