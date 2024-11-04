@@ -54,7 +54,9 @@ const MyProfile = () => {
       const fetchUser = async () => {
         console.log(userId);
         const userObject = await getUser(userId);
-        setUser(userObject.data);
+        console.log(userObject)
+        setUser(userObject.data.user);
+        setMyPosts(userObject.data.posts)
       }
       const fetchPosts = async() => {
         const postsObject = await getPosts();
@@ -142,7 +144,7 @@ const MyProfile = () => {
   console.log(myPosts);
 
   return (
-    <div className="profile">
+     user && <div className="profile">
       <div className="profile-header">
         <img src={user.profilePicture} alt="Profile" className="profile-picture" />
         
