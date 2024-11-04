@@ -1,21 +1,28 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './Footer.css';
 import Logout from "../Logout/logout";
 
 const Footer = ({ onOpenModal }) => {
     const navigate = useNavigate();
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 1024);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
-        <div className="footer">
+        <div className={`footer ${isDesktop ? 'desktop-footer' : ''}`}>
             <button onClick={() => { navigate("/myfeed") }}>
                 <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Feed" className="icon" />
             </button>
-
             <button className="upload-button" onClick={onOpenModal}>
                 <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
             </button>
-
             <button onClick={() => { navigate("/myprofile") }}>
                 <img src="https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg" alt="Profile" className="profile-picture" />
             </button>

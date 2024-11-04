@@ -1,0 +1,48 @@
+.footer-web {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Ancho del sidebar */
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #fafafa; /* Color del fondo */
+    border-right: 1px solid #ddd; /* Línea divisoria */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+  }
+  
+  
+  .footer-logo {
+    font-family: 'Cursive', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #000; /* Color del texto del logo */
+  }
+  
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .footer-item {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .footer-icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #000; /* Color de los iconos */
+  }
+  
+  .footer-item:hover {
+    color: #000;
+  }
+  
