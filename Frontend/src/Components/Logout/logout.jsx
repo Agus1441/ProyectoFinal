@@ -9,7 +9,7 @@ function Logout() {
     };
 
     return (
-        <button onClick={handleLogout}>Cerrar sesión</button>
+        <button onClick={handleLogout}><img src="https://static.vecteezy.com/system/resources/previews/020/839/751/non_2x/logout-icon-for-web-ui-design-vector.jpg" className="icon"></img></button>
     );
 }
 
