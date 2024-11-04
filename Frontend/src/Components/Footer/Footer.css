@@ -5,7 +5,7 @@
   right: 0;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; 
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
@@ -19,6 +19,8 @@
   border: none;
   cursor: pointer;
   outline: none;
+  flex: 1; /* Make buttons take equal space */
+  text-align: center; /* Center the button contents */
 }
 
 .footer .icon {
@@ -40,9 +42,6 @@
   margin-right: 30px; 
 }
 
-.upload-icon {
-  opacity: 1;
-}
 
 /* Estilos del modal */
 .modal {
@@ -55,7 +54,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
+  z-index: 1000;
 }
 
 .modal-content {
@@ -79,5 +78,11 @@
 
 .logout-button {
   position: relative;
-  top: -5px;
+}
+
+@media (max-width: 768px) {
+  .footer .profile-picture {
+    margin-right: 0; /* Remove right margin on mobile */
+    margin-top: 1px;
+  }
 }
