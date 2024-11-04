@@ -39,7 +39,6 @@
 
 .actions {
     display: flex;
-    justify-content: space-between;
     /* Espaciado entre Like y Comentar */
     margin-top: 8px;
 }
@@ -126,4 +125,12 @@
 
 .optionsButton {
     background: none;
+}
+
+.likes {
+    text-align: left;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: -3px;
+    margin-left: 5px;
 }
