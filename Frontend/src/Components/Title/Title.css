@@ -12,4 +12,5 @@
     z-index: 1000; /* Keep it on top of other elements */
     margin: 0; /* Ensure no default margin is applied */
     box-sizing: border-box; /* Include padding in the total width/height */
+    margin-bottom: 20px;
 }
