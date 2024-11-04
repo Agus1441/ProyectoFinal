@@ -4,6 +4,7 @@ import { getPosts } from '../../Services/PostsService';
 import styles from './feed.module.css';
 import Footer from '../../Components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
+import Title from '../../Components/Title/title';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -32,25 +33,28 @@ const Feed = () => {
   }
 
   return (
-    <div className={styles['feed-container']}>
-      <div className={styles['scrollable-posts']}>
-        {posts.length === 0 ? (
-          <div>No hay publicaciones disponibles</div>
-        ) : (
-          posts.map((post) => (
-            <div key={post._id} className={styles['feed-item']}>
-              <Post
-                user={post.user}
-                caption={post.content}
-                likes={post.likes}
-                createdAt={post.createdAt}
-                postId={post._id}
-              />
-            </div>
-          ))
-        )}
+    <div>
+      <Title></Title>
+      <div className={styles['feed-container']}>
+        <div className={styles['scrollable-posts']}>
+          {posts.length === 0 ? (
+            <div>No hay publicaciones disponibles</div>
+          ) : (
+            posts.map((post) => (
+              <div key={post._id} className={styles['feed-item']}>
+                <Post
+                  user={post.user}
+                  caption={post.content}
+                  likes={post.likes}
+                  createdAt={post.createdAt}
+                  postId={post._id}
+                />
+              </div>
+            ))
+          )}
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };
