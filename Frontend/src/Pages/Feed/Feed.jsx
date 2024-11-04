@@ -33,23 +33,24 @@ const Feed = () => {
 
   return (
     <div className={styles['feed-container']}>
-      {posts.length === 0 ? (
-        <div>No hay publicaciones disponibles</div>
-      ) : (
-        posts.map((post) => (
-          <div key={post._id} className={styles['feed-item']}>
-            <Post
-              user={post.user}
-              caption={post.content}
-              likes={post.likes}
-              createdAt={post.createdAt}
-              postId={post._id}
-            />
-          </div>
-        ))
-      )}
-      <Footer></Footer>
-      
+      <div className={styles['scrollable-posts']}>
+        {posts.length === 0 ? (
+          <div>No hay publicaciones disponibles</div>
+        ) : (
+          posts.map((post) => (
+            <div key={post._id} className={styles['feed-item']}>
+              <Post
+                user={post.user}
+                caption={post.content}
+                likes={post.likes}
+                createdAt={post.createdAt}
+                postId={post._id}
+              />
+            </div>
+          ))
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };
