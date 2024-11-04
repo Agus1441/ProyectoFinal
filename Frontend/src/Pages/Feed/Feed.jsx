@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from '../../Components/Post/Post';
 import { getPosts } from '../../Services/PostsService';
 import styles from './feed.module.css';
-import FooterWeb from '../../Components/Footer/FooterWeb';
+import Footer from '../../Components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import Title from '../../Components/Title/title';
 
@@ -36,7 +36,7 @@ const Feed = () => {
 
   return (
     <div className={styles['feed-container']}>
-      <FooterWeb /> {/* Se coloca a la izquierda debido al layout flex */}
+      <Footer /> {/* Se coloca a la izquierda debido al layout flex */}
       <div className={styles['feed-content']}>
         {posts.length === 0 ? (
           <div>No hay publicaciones disponibles</div>
