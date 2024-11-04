@@ -19,5 +19,5 @@ const RegisterPage = () => {
         </div>
     );
 };
-
+ 
 export default RegisterPage;
