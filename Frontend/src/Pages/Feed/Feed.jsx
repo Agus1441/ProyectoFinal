@@ -4,6 +4,7 @@ import { getPosts } from '../../Services/PostsService';
 import styles from './feed.module.css';
 import FooterWeb from '../../Components/Footer/FooterWeb';
 import { useNavigate } from 'react-router-dom';
+import Title from '../../Components/Title/title';
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);

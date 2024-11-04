@@ -6,6 +6,7 @@ import { commentPost, getPosts, likePost } from "../../Services/PostsService";
 import styles from "./post.module.css";
 
 const Post = ({ postId }) => {
+    // Verificar si el componente se está utilizando con un parámetro de URL
     if (window.location.href.startsWith("http://localhost:5173/posts/")) {
         const { id } = useParams();
         if (id) postId = id;
@@ -14,7 +15,7 @@ const Post = ({ postId }) => {
     const [postData, setPostData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState(null);
-    const [newComment, setNewComment] = useState('');
+    const [newComment, setNewComment] = useState('');  // Estado para el nuevo comentario
     const [liked, setLiked] = useState(false);
     const [commenting, setCommenting] = useState(false);
     const [error, setError] = useState('');
@@ -22,37 +23,59 @@ const Post = ({ postId }) => {
     const exampleImage = "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg";
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await getPosts();
-            if (response.data) {
-                response.data.forEach(async post => {
-                    if (post._id == postId) {
-                        setPostData(post);
-                        const data = await getUser(post.user);
-                        if (data) setUserData(data);
-                    }
-                });
-            }
-            setLoading(false);
-        };
-        fetchData();
-    }, []);
+        if (!postId) return; // Si no hay postId, no ejecuta la función
 
+        // Función para obtener datos del post y usuario asociado
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const response = await getPosts();
+                if (response.data) {
+                    const post = response.data.find(post => post._id === postId);
+                    if (post) {
+                        setPostData(post);
+                        const userResponse = await getUser(post.user);
+                        if (userResponse) setUserData(userResponse);
+                    } else {
+                        setError("Publicación no encontrada");
+                    }
+                }
+            } catch (err) {
+                setError("Error al cargar la publicación");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [postId]);
+
+    // Manejar el botón de "Me gusta"
     const handleLike = async () => {
-        const response = await likePost(postId);
-        if (response.success) {
-            setLiked(!liked);
-        } else {
-            setError(response.message);
+        try {
+            const response = await likePost(postId);
+            if (response.success) {
+                setLiked(!liked);
+            } else {
+                setError(response.message || "Error al dar 'Me gusta'");
+            }
+        } catch (err) {
+            setError("Error al dar 'Me gusta'");
         }
     };
 
+    // Manejar el envío de comentarios
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         const result = await commentPost(newComment, postId);
         if (result.success) {
-            setNewComment('');
+            setNewComment(''); // Limpiar el campo de comentario después de enviar
             setCommenting(false);
+            // Agregar el nuevo comentario a la lista de comentarios del post
+            setPostData((prevData) => ({
+                ...prevData,
+                comments: [...(prevData.comments || []), result.data]
+            }));
         } else {
             setError(result.message);
         }
@@ -67,6 +90,7 @@ const Post = ({ postId }) => {
     };
 
     if (loading) return <div>Cargando Datos...</div>;
+    if (error) return <div>{error}</div>;
     if (!postData || !userData) return <div>No se pudo encontrar la publicación :C</div>;
 
     return (
@@ -125,10 +149,10 @@ const Post = ({ postId }) => {
                 </button>
             </div>
 
-            <p>{postData.likes.length} Likes</p>
+            <p className={styles.likes}>{postData.likes.length} Likes</p>
             <p>{userData.username + " " + postData.content}</p>
 
-            <div className={styles.commentSection}>Ver los {/*comments.length*/} comentarios</div>
+            <div className={styles.commentSection}>Ver los {postData.comments?.length || 0} comentarios</div>
 
             {commenting && (
                 <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
@@ -150,3 +174,4 @@ const Post = ({ postId }) => {
 };
 
 export default Post;
+
