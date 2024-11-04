@@ -125,7 +125,7 @@ const Post = ({ postId }) => {
                 </button>
             </div>
 
-            <p>{postData.likes.length} Likes</p>
+            <p className={styles.likes}>{postData.likes.length} Likes</p>
             <p>{userData.username + " " + postData.content}</p>
 
             <div className={styles.commentSection}>Ver los {/*comments.length*/} comentarios</div>
