@@ -97,7 +97,7 @@ const MyProfile = () => {
                     </div>
                     <div>
                         <span>{user.friendsCount}</span>
-                        <p>Friends</p>
+                        <p>Friends </p>
                     </div>
                 </div>
 
