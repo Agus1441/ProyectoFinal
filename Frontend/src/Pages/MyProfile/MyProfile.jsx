@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from "react";
-import './MyProfile.css'; 
+import './MyProfile.css';
 import Footer from "../../Components/Footer/Footer";
 import { getUser } from "../../Services/UsersService";
 import { useNavigate } from "react-router-dom";
-import { getPosts } from "../../Services/PostsService";
+import { getPosts, uploadPost } from "../../Services/PostsService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
 import Logout from "../../Components/Logout/logout";
+
 
 const MyProfile = () => {
     const navigate = useNavigate();
     const userId = localStorage.getItem('userId');
     const [user, setUser] = useState({});
     const [myPosts, setMyPosts] = useState([]);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+    const [file, setFile] = useState();
 
     useEffect(() => {
-        if(!userId){
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 1024);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
+        if (!userId) {
             navigate('/');
         } else {
             const fetchUser = async () => {
@@ -41,13 +52,14 @@ const MyProfile = () => {
     };
 
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
+        const fileUploaded = event.target.files[0];
+        if (fileUploaded) {
             setNewPostData((prevData) => ({
                 ...prevData,
-                imageUrl: URL.createObjectURL(file),
+                imageUrl: URL.createObjectURL(fileUploaded),
             }));
             setErrorMessage("");
+            setFile(fileUploaded);
         }
     };
 
@@ -64,17 +76,8 @@ const MyProfile = () => {
             return;
         }
 
-        const newPost = {
-            id: user.posts ? user.posts.length + 1 : 1,
-            imageUrl: newPostData.imageUrl,
-            caption: newPostData.description || "Nueva publicación",
-        };
-
-        setUser((prevUser) => ({
-            ...prevUser,
-            posts: [newPost, ...(prevUser.posts || [])],
-            postsCount: (prevUser.postsCount || 0) + 1,
-        }));
+        console.log(newPostData);
+        console.log(uploadPost(file, newPostData.description || "Nueva publicación"));
 
         closeModal();
     };
@@ -82,14 +85,24 @@ const MyProfile = () => {
     return (
         user && <div className="profile">
             <div className="profile-header">
+               
                 <img src={user.profilePicture || defaultPhoto} alt="Profile" className="profile-picture" />
+                 
+                    <button className="upload-button" onClick={openModal}>
+                        <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
+                    </button>
                 
+                
+            
                 <div className="profile-info">
-                    <h2>{user.name}</h2>
+                    <h2>Nombre: {user.name}</h2>
                     <p>@{user.username}</p>
-                    <p>{user.bio}</p>
+                    <p>Descripcion: {user.bio}</p>
                 </div>
+
+
                 
+
                 <div className="profile-stats">
                     <div>
                         <span>{user.postsCount}</span>
@@ -111,8 +124,10 @@ const MyProfile = () => {
                     </div>
                 )) : <p>No posts available</p>}
             </div>
-            
-            <Footer onOpenModal={openModal} />
+
+
+
+            <Footer />
 
             {isModalOpen && (
                 <div className="modal">
@@ -126,7 +141,7 @@ const MyProfile = () => {
                             placeholder="Escribe una descripción..."
                             value={newPostData.description}
                             onChange={handleDescriptionChange}
-                            className="description-box"  
+                            className="description-box"
                         />
                         {errorMessage && <p className="error-message">{errorMessage}</p>}
                         <button onClick={handleUpload}>Subir</button>

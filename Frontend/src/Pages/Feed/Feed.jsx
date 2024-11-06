@@ -36,7 +36,7 @@ const Feed = () => {
 
   return (
     <div className={styles['feed-container']}>
-      <Footer /> {/* Se coloca a la izquierda debido al layout flex */}
+      <Footer />
       <div className={styles['feed-content']}>
         {posts.length === 0 ? (
           <div>No hay publicaciones disponibles</div>

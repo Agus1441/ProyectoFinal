@@ -44,7 +44,8 @@
   background-color: #bdbdbd;
 }
 
-/* Otros estilos */
+
+
 .profile-info h2 {
   margin: 0;
   font-size: 18px;
@@ -168,4 +169,21 @@
 }
 .modal-buttons button:hover {
   background-color: #333; 
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+  opacity: 0.7;
+}
+
+.icon:hover {
+  opacity: 1;
+}
+
+
+.upload-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

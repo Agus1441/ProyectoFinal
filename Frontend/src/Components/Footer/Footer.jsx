@@ -4,7 +4,7 @@ import { FaHome, FaHeart, FaPlusSquare, FaUserCircle } from 'react-icons/fa';
 import './Footer.css';
 import Logout from "../Logout/logout";
 
-const Footer = ({ onOpenModal }) => {
+const Footer = () => {
     const navigate = useNavigate();
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
@@ -46,9 +46,6 @@ const Footer = ({ onOpenModal }) => {
         <div className="footer">
             <button onClick={() => navigate("/myfeed")}>
                 <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Feed" className="icon" />
-            </button>
-            <button className="upload-button" onClick={onOpenModal}>
-                <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
             </button>
             <button onClick={() => navigate("/myprofile")}>
                 <img src="https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg" alt="Profile" className="profile-picture" />

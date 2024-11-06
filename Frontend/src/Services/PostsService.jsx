@@ -260,3 +260,48 @@ export const removeLike = async (postID) => {
     }
 };
 
+
+
+
+
+export const uploadPost = async (file, caption) => {
+    console.log("Intentamos con: " + file)
+    try {
+        const token = await localStorage.getItem('token');
+        if (!token) {
+            return { success: false, message: 'Token no disponible. Por favor, inicia sesión.' };
+        }
+
+        const formData = new FormData();
+        formData.append('caption', caption);
+
+        // Configuración del archivo para el backend
+        // const fileName = imageUri.split('/').pop();
+        // const fileType = imageUri.split('.').pop();
+        // console.log("Nombre del archivo: " + fileName);
+        // console.log("Tipo del archivo: " + fileType);
+
+        formData.append('image', file);
+
+        console.log(formData);
+
+        const res = await fetch(`${URL}posts/upload`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                        },
+            body: formData,
+        });
+        console.log(res);
+
+        if (res.status === 201) {
+            const data = await res.json();
+            return { success: true, message: 'Imagen subida exitosamente', data };
+        }
+
+        return { success: false, message: `Error inesperado: ${res.status}` };
+    } catch (error) {
+        return { success: false, message: `Error de conexión: ${error.message}` };
+    }
+};
+
