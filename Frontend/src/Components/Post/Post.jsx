@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { createElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Comment from "../Comment/Comment";
 import { getUser } from "../../Services/UsersService";
 import { commentPost, getPosts, likePost } from "../../Services/PostsService";
 import styles from "./post.module.css";
+import { backendURL } from "../../Constants";
 
-const Post = ({ postId }) => {
-    // Verificar si el componente se está utilizando con un parámetro de URL
-    if (window.location.href.startsWith("http://localhost:5173/posts/")) {
-        const { id } = useParams();
-        if (id) postId = id;
-    }
+const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments }) => {
+
 
     const [postData, setPostData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [userData, setUserData] = useState(null);
     const [newComment, setNewComment] = useState('');  // Estado para el nuevo comentario
     const [liked, setLiked] = useState(false);
     const [commenting, setCommenting] = useState(false);
@@ -22,33 +18,64 @@ const Post = ({ postId }) => {
     const [optionsVisible, setOptionsVisible] = useState(false);
     const exampleImage = "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg";
 
-    useEffect(() => {
-        if (!postId) return; // Si no hay postId, no ejecuta la función
-
-        // Función para obtener datos del post y usuario asociado
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const response = await getPosts();
-                if (response.data) {
-                    const post = response.data.find(post => post._id === postId);
-                    if (post) {
-                        setPostData(post);
-                        const userResponse = await getUser(post.user);
-                        if (userResponse) setUserData(userResponse);
-                    } else {
-                        setError("Publicación no encontrada");
+    // Verificar si el componente se está utilizando con un parámetro de URL
+    if (window.location.href.startsWith("http://localhost:5173/posts/")) {
+        //Cargar el post por parámetro de URL
+        useEffect(() => {
+            const { id } = useParams();
+            if (!id) return; // Si no hay postId, no ejecuta la función
+    
+            // Función para obtener datos del post y usuario asociado
+            const fetchData = async () => {
+                setLoading(true);
+                try {
+                    console.log("Se comenzó")
+                    const response = await getPosts();
+                    if (response.data) {
+                        const post = response.data.find(post => post._id === id);
+                        if (post) {
+                            setPostData(post);
+                        } else {
+                            setError("Publicación no encontrada");
+                        }
                     }
+                } catch (err) {
+                    setError("Error al cargar la publicación");
+                } finally {
+                    console.log("Se finalizó")
+                    setLoading(false);
                 }
-            } catch (err) {
-                setError("Error al cargar la publicación");
-            } finally {
-                setLoading(false);
-            }
-        };
+            };
+    
+            fetchData();
+        }, []);
+    }
+    else{
+        useEffect(() => {
+            setPostData({
+                publisher: publisher,
+                caption: caption,
+                likes: likes,
+                createdAt: createdAt,
+                imageUrl: imageUrl,
+                comments: comments,
+            });
+            setLoading(false);
+        }, [])
+    }
 
-        fetchData();
-    }, [postId]);
+    //Obtener sí el post fue likeado por nosotros
+    useEffect(() => {
+        if (postData){
+            if(postData.likes.includes(localStorage.getItem('userId'))){
+                setLiked(true);
+            }
+            else{
+                setLiked(false);
+            }
+        }
+    }, [postData])
+    
 
     // Manejar el botón de "Me gusta"
     const handleLike = async () => {
@@ -71,11 +98,6 @@ const Post = ({ postId }) => {
         if (result.success) {
             setNewComment(''); // Limpiar el campo de comentario después de enviar
             setCommenting(false);
-            // Agregar el nuevo comentario a la lista de comentarios del post
-            setPostData((prevData) => ({
-                ...prevData,
-                comments: [...(prevData.comments || []), result.data]
-            }));
         } else {
             setError(result.message);
         }
@@ -91,17 +113,17 @@ const Post = ({ postId }) => {
 
     if (loading) return <div>Cargando Datos...</div>;
     if (error) return <div>{error}</div>;
-    if (!postData || !userData) return <div>No se pudo encontrar la publicación :C</div>;
+    if (!postData) return <div>No se pudo encontrar la publicación :C</div>;
 
     return (
         <div className={styles.post}>
             <div className={styles.profileInfo}>
                 <img
-                    src={exampleImage}
-                    alt={"Foto de Perfil de " + userData.username}
+                    src={postData.publisher.profilePicture || exampleImage}
+                    alt={"Foto de Perfil de " + postData.publisher.username}
                     className={styles.profileImage}
                 />
-                <h2 className={styles.username}>{userData.username}</h2>
+                <h2 className={styles.username}>{postData.publisher.username}</h2>
 
                 <button onClick={toggleOptions} className={styles.optionsButton}>
                     <svg width="20" height="20" viewBox="0 0 24 24">
@@ -124,14 +146,14 @@ const Post = ({ postId }) => {
 
             <img
                 style={{ borderRadius: "8px", width: "100%", height: "100%" }}
-                src={postData.image}
-                alt={`Publicación ${postId}`}
+                src={backendURL + postData.imageUrl}
+                alt={postData.caption}
                 className={styles.postImage}
             />
 
             <div className={styles.actions}>
                 <button onClick={handleLike} className={styles.actionButton}>
-                    {liked ? (
+                    {postData.liked ? (
                         <svg width="24" height="24" fill="red" viewBox="0 0 24 24">
                             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                         </svg>
@@ -150,7 +172,10 @@ const Post = ({ postId }) => {
             </div>
 
             <p className={styles.likes}>{postData.likes.length} Likes</p>
-            <p>{userData.username + " " + postData.content}</p>
+            <p> 
+                <b className={styles.smallUsername}>{postData.publisher.username} </b>
+                {postData.caption}
+            </p>
 
             <div className={styles.commentSection}>Ver los {postData.comments?.length || 0} comentarios</div>
 

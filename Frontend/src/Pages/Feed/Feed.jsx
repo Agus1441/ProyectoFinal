@@ -45,10 +45,12 @@ const Feed = () => {
             <div key={post._id} className={styles['feed-item']}>
               <Post
                 postId={post._id}
-                userId={post.user}
+                publisher={post.user}
                 caption={post.caption}
                 likes={post.likes}
                 createdAt={post.createdAt}
+                imageUrl = {post.imageUrl}
+                comments = {post.comments}
               />
             </div>
           ))
