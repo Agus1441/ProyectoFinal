@@ -5,6 +5,7 @@ import { getUser } from "../../Services/UsersService";
 import { commentPost, getPosts, likePost } from "../../Services/PostsService";
 import styles from "./post.module.css";
 import { backendURL } from "../../Constants";
+import defaultPhoto from "../../assets/defaultpic.jpg";
 
 const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments }) => {
 
@@ -16,16 +17,13 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
     const [commenting, setCommenting] = useState(false);
     const [error, setError] = useState('');
     const [optionsVisible, setOptionsVisible] = useState(false);
-    const exampleImage = "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg";
 
     // Verificar si el componente se está utilizando con un parámetro de URL
     if (window.location.href.startsWith("http://localhost:5173/posts/")) {
         //Cargar el post por parámetro de URL
+        const { id } = useParams();
+        if (!id) return; // Si no hay postId, no ejecuta la función
         useEffect(() => {
-            const { id } = useParams();
-            if (!id) return; // Si no hay postId, no ejecuta la función
-    
-            // Función para obtener datos del post y usuario asociado
             const fetchData = async () => {
                 setLoading(true);
                 try {
@@ -34,6 +32,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
                     if (response.data) {
                         const post = response.data.find(post => post._id === id);
                         if (post) {
+                            post.publisher = post.user;
                             setPostData(post);
                         } else {
                             setError("Publicación no encontrada");
@@ -119,7 +118,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
         <div className={styles.post}>
             <div className={styles.profileInfo}>
                 <img
-                    src={postData.publisher.profilePicture || exampleImage}
+                    src={postData.publisher.profilePicture || defaultPhoto}
                     alt={"Foto de Perfil de " + postData.publisher.username}
                     className={styles.profileImage}
                 />

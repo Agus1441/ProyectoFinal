@@ -187,3 +187,7 @@
   top: 10px;
   right: 10px;
 }
+
+.bigMessage {
+  font-size: 30px;
+}

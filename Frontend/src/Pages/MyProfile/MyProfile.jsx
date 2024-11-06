@@ -31,6 +31,7 @@ const MyProfile = () => {
         } else {
             const fetchUser = async () => {
                 const userObject = await getUser(userId);
+                console.log(userObject);
                 setUser(userObject.data.user);
                 setMyPosts(userObject.data.posts);
             };
@@ -86,45 +87,52 @@ const MyProfile = () => {
     return (
         user && <div className="profile">
             <div className="profile-header">
-               
+
                 <img src={user.profilePicture || defaultPhoto} alt="Profile" className="profile-picture" />
-                 
+
+                {isDesktop ? null :
                     <button className="upload-button" onClick={openModal}>
                         <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
                     </button>
-                
-                
-            
+                }
+
+
+
+
                 <div className="profile-info">
-                    <h2>Nombre: {user.name}</h2>
-                    <p>@{user.username}</p>
-                    <p>Descripcion: {user.bio}</p>
+                    <h2>{user.username}</h2>
                 </div>
 
 
-                
+
 
                 <div className="profile-stats">
                     <div>
-                        <span>{user.postsCount}</span>
+                        <span>{myPosts?.length || 0}</span>
                         <p>Posts</p>
                     </div>
                     <div>
-                        <span>{user.friendsCount}</span>
-                        <p>Friends </p>
+                        <span>{user.friends?.length || 0}</span>
+                        <p>Friends</p>
                     </div>
                 </div>
 
                 <button className="profile-edit-button">Edit profile</button>
             </div>
 
-            <div className="profile-posts">
-                {myPosts.length > 0 ? myPosts.map((post) => (
-                    <div key={post._id} className="profile-post">
-                        <img src={backendURL + post.imageUrl} alt="Post" className="post-image" />
-                    </div>
-                )) : <p>No posts available</p>}
-            </div>
+
+            {myPosts.length > 0 ?
+                <div className="profile-posts">{
+                    myPosts.map((post) => (
+                        <div key={post._id} className="profile-post">
+                            <img src={backendURL + post.imageUrl} alt="Post" className="post-image" onClick={() => { navigate(`/posts/${post._id}`) }} />
+                        </div>
+                    ))
+                }
+                </div> :
+                <p className="bigMessage">Todavía no has publicado nada</p>
+            }
+
 
 
 
