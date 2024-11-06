@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getPosts, uploadPost } from "../../Services/PostsService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
 import Logout from "../../Components/Logout/logout";
+import { backendURL } from "../../Constants";
 
 
 const MyProfile = () => {
@@ -120,7 +121,7 @@ const MyProfile = () => {
             <div className="profile-posts">
                 {myPosts.length > 0 ? myPosts.map((post) => (
                     <div key={post._id} className="profile-post">
-                        <img src={post.image} alt="Post" className="post-image" />
+                        <img src={backendURL + post.imageUrl} alt="Post" className="post-image" />
                     </div>
                 )) : <p>No posts available</p>}
             </div>

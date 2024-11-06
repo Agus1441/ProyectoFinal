@@ -44,11 +44,11 @@ const Feed = () => {
           posts.map((post) => (
             <div key={post._id} className={styles['feed-item']}>
               <Post
-                user={post.user}
-                caption={post.content}
+                postId={post._id}
+                userId={post.user}
+                caption={post.caption}
                 likes={post.likes}
                 createdAt={post.createdAt}
-                postId={post._id}
               />
             </div>
           ))

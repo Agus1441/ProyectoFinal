@@ -1,4 +1,6 @@
-const URL = "http://localhost:3001/api/";
+import { backendURL } from "../Constants";
+
+const URL = `${backendURL}api/`;
 
 export const register = async (registerData) => {
     try {
