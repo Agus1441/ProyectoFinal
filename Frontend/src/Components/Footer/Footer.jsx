@@ -27,7 +27,7 @@ const Footer = ({ onOpenModal }) => {
                     </Link>
                     <Link to="/notifications" className="footer-item">
                         <FaHeart className="footer-icon" />
-                        <span>Notifications</span>
+                        <span>Notificaciones</span>
                     </Link>
                     <Link to="/create" className="footer-item">
                         <FaPlusSquare className="footer-icon" />
