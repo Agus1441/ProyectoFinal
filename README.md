@@ -37,16 +37,14 @@
 
 #### Feed 
 - Muestra una lista de publicaciones que existen en la red social en el feed del usuario.
-#### FriendProfile
-- Te permite ingresar a perfiles diferentes al tuyo, donde te mostrará el nombre de usuario y la foto de perfil, junto con sus publicaciones.
 #### Login
--
+- Te permite iniciar sesion si anteriormente completaste el formulario del componente "Register" de lo contrario tendras que completar uno.
 #### MyProfile
--
+- Puedes ingresar a tu perfil, donde te mostrará el nombre de usuario y la foto de perfil, junto con sus publicaciones y los detalles de las mismas.
 #### Profile 
--
+- Puedes ingresar a perfiles diferentes al tuyo, donde te mostrará el nombre de usuario y la foto de perfil, junto con sus publicaciones y los detalles de las mismas.
 #### Register
--
+- Es la pagina en la que puedes ingresar las datos para completar el formulario del componente "Register".
 
 
 
