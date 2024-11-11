@@ -12,10 +12,9 @@
     2) cd api-node
     3) npm install
     4) node server.js (La terminal deberia aparezer "Server running on port 3001" y "MongoDB connected")
-    5) cd ..
-    6) cd ..
-    7) cd Frontend
-    8) npm install
-    9) npm run dev (Si hiciste bien los pasos en la terminal deberia aparezerte el link a la aplicacion ("http://localhost:5173/"))
+7) Una vez escritos los comandos anteriores se abre una nueva terminal sin cerrar la anterior e ingresen los siguientes comandos
+    1) cd Frontend
+    2) npm install
+    3) npm run dev (Si hiciste bien los pasos en la terminal deberia aparezerte el link a la aplicacion ("http://localhost:5173/"))
 8) Abra algun navegador en su ordenador e ingrese el link que aparezio en la terminal
 9) Si el programa funciona como deberia en el navegador le aparezera una pagina para iniciar sesion, en esta usted debera elegir la opcion para registrarte 
