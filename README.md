@@ -1,4 +1,4 @@
-# ProyectoFinal
+# Proyecto Final
 
 ## Instrucciones
 
