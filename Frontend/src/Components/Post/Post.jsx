@@ -1,7 +1,7 @@
 import { createElement, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../Comment/Comment";
-import { commentPost, getPosts, likePost } from "../../Services/PostsService";
+import { commentPost, getPosts, likePost, removeLike } from "../../Services/PostsService";
 import styles from "./post.module.css";
 import { backendURL } from "../../Constants";
 import defaultPhoto from "../../assets/defaultpic.jpg";
@@ -69,19 +69,38 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
     }, [postData]);
 
     const handleLike = async () => {
-        try {
-            const response = await likePost(postData._id);
-            if (response.success) {
-                setLiked(!liked);
-                setPostData({
-                    ...postData,
-                    likes: [...postData.likes, localStorage.getItem('userId')]
-                });
-            } else {
-                setError(response.message || "Error al dar 'Me gusta'");
+
+        if(postData.likes.includes(localStorage.getItem('userId'))){
+            try {
+                const response = await removeLike(postData._id);
+                if (response.success) {
+                    setLiked(!liked);
+                    setPostData({
+                        ...postData,
+                        likes: postData.likes.filter(userId => userId !== localStorage.getItem('userId'))
+                    });
+                } else {
+                    setError(response.message || "Error al quitar el 'Me gusta'");
+                }
+            } catch (err) {
+                setError("Error al quitar el 'Me gusta'");
             }
-        } catch (err) {
-            setError("Error al dar 'Me gusta'");
+        }
+        else{
+            try {
+                const response = await likePost(postData._id);
+                if (response.success) {
+                    setLiked(!liked);
+                    setPostData({
+                        ...postData,
+                        likes: [...postData.likes, localStorage.getItem('userId')]
+                    });
+                } else {
+                    setError(response.message || "Error al dar 'Me gusta'");
+                }
+            } catch (err) {
+                setError("Error al dar 'Me gusta'");
+            }
         }
     };
 
