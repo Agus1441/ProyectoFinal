@@ -2,219 +2,81 @@ import React, { useEffect, useState } from "react";
 import Footer from "../../Components/Footer/Footer";
 import { getUser } from "../../Services/UsersService";
 import { useNavigate, useParams } from "react-router-dom";
-import { getPosts } from "../../Services/PostsService";
+import { getPosts, uploadPost } from "../../Services/PostsService";
+import defaultPhoto from "../../assets/defaultpic.jpg";
+import Logout from "../../Components/Logout/logout";
+import { backendURL } from "../../Constants";
+
 
 const Profile = () => {
-    /* Usuario de Ejemplo
-    const [user, setUser] = useState({
-      name: "Mateo",
-      username: "mateo123",
-      bio: "Estudiante en UCU.",
-      profilePicture: "https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg",
-      postsCount: 153,
-      friendsCount: 209,
-      posts: [
-        {
-          id: 1,
-          imageUrl: "https://www.mensjournal.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MjA2MjcxNzAxMzg1NjE4NjA4/elden-ring-best-route.jpg",
-          caption: "Jugando Elden Ring",
-        },
-        {
-          id: 3,
-          imageUrl: "https://media.elobservador.com.uy/p/ec698a312ec601c8b59ded21937bd494/adjuntos/362/imagenes/100/557/0100557383/1000x0/smart/20241020-penarol-festejo-el-triunfo-boston-river-pensando-botafogo-la-copa-libertadores.jpeg",
-          caption: "Alentando a PEÑAROL",
-        },
-        {
-          id: 4,
-          imageUrl: "https://www.ucu.edu.uy/imgnoticias/202305/W950/2416.jpg",
-          caption: "En la facultad 😎",
-        },
-        {
-          id: 2,
-          imageUrl: "https://s2-ug.ap4r.com/image-aigc-article/seoPic/origin/15aa3f1d8146fe8ea01c12b750ed5d5c225d2aaf.jpg",
-          caption: "Mi Primer Post",
-        },
-      ],
-    });
-    */
-
     const navigate = useNavigate();
-    const { id: userId } = useParams()
-    console.log(userId);
-    const [user, setUser] = useState(null);
-    const [userPosts, setUserPosts] = useState(null);
+    const userId = localStorage.getItem('userId');
+    const [user, setUser] = useState({});
+    const [userPosts, setUserPosts] = useState([]);
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+    const { id } = useParams();
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            navigate('/'); // Redirige a la página de login
-        }
-    }, [navigate]);
-
-    // Redirigir si no hay userId
-    useEffect(() => {
-        console.log("Voy a cargar el usuario")
-        const fetchUser = async () => {
-            const userObject = await getUser(userId);
-            if(userObject.data == undefined){
-                console.log("No se encontró el perfil")
-                navigate('/myfeed');
-            }
-            console.log("Llegó el usuario, va a poner: " + userObject.data);
-            setUser(userObject.data);
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 1024);
         };
-        fetchUser();
-    }, [userId, navigate]); 
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
-    // Obtener los posts del usuario cuando el usuario esté disponible
     useEffect(() => {
-        const fetchPosts = async () => {
-            console.log("Voy a intentar cargar los posts")
-            if (!user) return;
-            console.log("Hay usuario, voy a hacerlo")
-            const postsObject = await getPosts();
-            const filteredPosts = postsObject.data.filter(post => post.user === user._id);
-            console.log(filteredPosts)
-            setUserPosts(filteredPosts);
-        };
-
-        fetchPosts();
-    }, [user]);
-
-    // Monitorear cambios en los posts
-    useEffect(() => {
-        console.log("Ahora los posts son:")
-        console.log(userPosts);
-    }, [userPosts]);
-
-
-
-
-
-
-    // Estado para controlar el modal y los datos de la nueva publicación
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newPostData, setNewPostData] = useState({
-        imageUrl: "",
-        description: "",
-    });
-
-    const [errorMessage, setErrorMessage] = useState(""); // Para almacenar el mensaje de error
-
-    // Función para abrir el modal
-    const openModal = () => setIsModalOpen(true);
-
-    // Función para cerrar el modal
-    const closeModal = () => {
-        setNewPostData({ imageUrl: "", description: "" }); // Resetea los datos
-        setErrorMessage(""); // Resetea el mensaje de error
-        setIsModalOpen(false);
-    };
-
-    // Función para manejar la subida de la nueva imagen
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setNewPostData((prevData) => ({
-                ...prevData,
-                imageUrl: URL.createObjectURL(file), // Mostramos la imagen localmente
-            }));
-            setErrorMessage(""); // Limpiar el mensaje de error si selecciona una imagen
+        if (!userId) {
+            navigate('/');
+        } else {
+            const fetchUser = async () => {
+                const userObject = await getUser(id);
+                console.log(userObject);
+                setUser(userObject.data.user);
+                setUserPosts(userObject.data.posts);
+            };
+            fetchUser();
         }
-    };
+    }, [userId, navigate]);
 
-    // Función para manejar el cambio de descripción
-    const handleDescriptionChange = (event) => {
-        setNewPostData((prevData) => ({
-            ...prevData,
-            description: event.target.value,
-        }));
-    };
+    const [errorMessage, setErrorMessage] = useState("");
 
-    // Función para subir la nueva publicación
-    const handleUpload = () => {
-        // Validación: Verificar si se ha seleccionado una imagen
-        if (!newPostData.imageUrl) {
-            setErrorMessage("Debes subir una foto antes de publicar.");
-            return;
-        }
-
-        const newPost = {
-            id: user.posts.length + 1,
-            imageUrl: newPostData.imageUrl,
-            caption: newPostData.description || "Nueva publicación", // Si no hay descripción, usar un texto por defecto
-        };
-
-        // Actualizamos el estado del usuario agregando la nueva publicación
-        setUser((prevUser) => ({
-            ...prevUser,
-            posts: [newPost, ...prevUser.posts], // Agregar al principio de la lista
-            postsCount: prevUser.postsCount + 1, // Incrementamos el conteo de posts
-        }));
-
-        // Cerramos el modal
-        closeModal();
-    };
-
-    if (userPosts == null) return <div>Cargando Datos...</div>
 
     return (
-        <div className="profile">
+        user && <div className="profile">
             <div className="profile-header">
-                <img src={user.profilePicture} alt="Profile" className="profile-picture" />
+
+                <img src={user.profilePicture || defaultPhoto} alt="Profile" className="profile-picture" />
 
                 <div className="profile-info">
-                    <h2>{user.name}</h2>
-                    <p>@{user.username}</p>
-                    <p>{user.bio}</p>
+                    <h2>{user.username}</h2>
                 </div>
 
                 <div className="profile-stats">
                     <div>
-                        <span>{user.postsCount}</span>
+                        <span>{userPosts?.length || 0}</span>
                         <p>Posts</p>
                     </div>
                     <div>
-                        <span>{user.friendsCount}</span>
+                        <span>{user.friends?.length || 0}</span>
                         <p>Friends</p>
                     </div>
                 </div>
-
-                <button className="profile-edit-button">Edit profile</button>
             </div>
 
-            <div className="profile-posts">
-                {userPosts.map((post) => (
-                    <div key={post._id} className="profile-post">
-                    <img src={post.image} alt="Post" className="post-image" />
-                    {post.content}
-                  </div>
-                ))}
-            </div>
 
-            {/* Pasamos la función openModal al Footer */}
-            <Footer onOpenModal={openModal} />
+            {userPosts.length > 0 ?
+                <div className="profile-posts">{
+                    userPosts.map((post) => (
+                        <div key={post._id} className="profile-post">
+                            <img src={backendURL + post.imageUrl} alt="Post" className="post-image" onClick={() => { navigate(`/posts/${post._id}`) }} />
+                        </div>
+                    ))
+                }
+                </div> :
+                <p className="bigMessage">{user.username} todavía no ha publicado nada</p>
+            }
 
-            {/* Modal de subida de imagen */}
-            {isModalOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>Subir una nueva publicación</h2>
-                        <input type="file" accept="image/*" onChange={handleImageChange} />
-                        {newPostData.imageUrl && (
-                            <img src={newPostData.imageUrl} alt="Preview" className="image-preview" />
-                        )}
-                        <textarea
-                            placeholder="Escribe una descripción..."
-                            value={newPostData.description}
-                            onChange={handleDescriptionChange}
-                            className="description-box"
-                        />
-                        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Mensaje de error */}
-                        <button onClick={handleUpload}>Subir</button>
-                        <button onClick={closeModal}>Cancelar</button>
-                    </div>
-                </div>
-            )}
+            <Footer />
         </div>
     );
 };

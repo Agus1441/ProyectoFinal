@@ -1,7 +1,6 @@
 import { createElement, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Comment from "../Comment/Comment";
-import { getUser } from "../../Services/UsersService";
 import { commentPost, getPosts, likePost } from "../../Services/PostsService";
 import styles from "./post.module.css";
 import { backendURL } from "../../Constants";
@@ -17,6 +16,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
     const [commenting, setCommenting] = useState(false);
     const [error, setError] = useState('');
     const [optionsVisible, setOptionsVisible] = useState(false);
+    const navigate = useNavigate();
 
     // Verificar si el componente se está utilizando con un parámetro de URL
     if (window.location.href.startsWith("http://localhost:5173/posts/")) {
@@ -121,8 +121,13 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
                     src={postData.publisher.profilePicture || defaultPhoto}
                     alt={"Foto de Perfil de " + postData.publisher.username}
                     className={styles.profileImage}
+                    onClick={() => {navigate(`/profile/${postData.publisher._id}`)}}
                 />
-                <h2 className={styles.username}>{postData.publisher.username}</h2>
+                <h2 className={styles.username} 
+                    onClick={() => {navigate(`/profile/${postData.publisher._id}`)}}
+                >
+                    {postData.publisher.username}
+                </h2>
 
                 <button onClick={toggleOptions} className={styles.optionsButton}>
                     <svg width="20" height="20" viewBox="0 0 24 24">

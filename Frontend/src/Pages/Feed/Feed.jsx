@@ -12,6 +12,10 @@ const Feed = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const sortPostsCronologically = (postsList) => {
+      return postsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    };
+    
     const fetchPosts = async () => {
       try {
         const response = await getPosts();
@@ -19,13 +23,15 @@ const Feed = () => {
           navigate('/');
         }
         console.log(response);
-        setPosts(response.data);
+        setPosts(sortPostsCronologically(response.data));
       } catch (error) {
         console.error('Error al cargar las publicaciones:', error);
       } finally {
         setLoading(false);
       }
     };
+
+
 
     fetchPosts();
   }, []);

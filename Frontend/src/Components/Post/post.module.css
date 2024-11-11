@@ -30,6 +30,17 @@
     font-weight: bold;
 }
 
+.profileImage:hover,
+.username:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.2s ease;
+}
+
+.profileImage:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .smallUsername{
     color: black;
 }
