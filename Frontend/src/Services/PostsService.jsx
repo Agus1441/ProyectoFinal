@@ -153,7 +153,7 @@ export const getComment = async (commentID) => {
             return { success: false, message: 'Comentario no encontrado' };
         }
 
-        if (res.status === 201) {
+        if (res.status === 200) {
             const data = await res.json();
             return { 
                 success: true, 
@@ -196,7 +196,7 @@ export const likePost = async (postID) => {
             return { success: false, message: 'Post no encontrado.' };
         }
 
-        if (res.status === 201) {
+        if (res.status === 200) {
             const data = await res.json();
             return { 
                 success: true, 

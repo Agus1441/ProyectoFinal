@@ -17,6 +17,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
     const [commenting, setCommenting] = useState(false);
     const [error, setError] = useState('');
     const [optionsVisible, setOptionsVisible] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const navigate = useNavigate();
 
     if (window.location.href.startsWith("http://localhost:5173/posts/")) {
@@ -72,6 +73,10 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
             const response = await likePost(postData._id);
             if (response.success) {
                 setLiked(!liked);
+                setPostData({
+                    ...postData,
+                    likes: [...postData.likes, localStorage.getItem('userId')]
+                });
             } else {
                 setError(response.message || "Error al dar 'Me gusta'");
             }
@@ -99,8 +104,9 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
         setOptionsVisible(false);
     };
 
-    const goToUserProfile = () => {
-        navigate(`/profile/${postData.publisher._id}`);
+
+    const toggleComments = () => {
+        setShowComments(!showComments);
     };
 
     if (loading) return <div>Cargando Datos...</div>;
@@ -174,7 +180,16 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
                 {postData.caption}
             </p>
 
-            <div className={styles.commentSection}>Ver los {postData.comments?.length || 0} comentarios</div>
+
+            <div className={styles.commentSection} onClick={toggleComments}>
+                {showComments 
+                    ? `Ocultar comentarios` 
+                    : `Ver los ${postData.comments?.length || 0} comentarios`}
+            </div>
+
+            {showComments && postData.comments.map((commentId) => (
+                <Comment key={commentId} id={commentId} />
+            ))}
 
             {commenting && (
                 <form onSubmit={handleCommentSubmit} className={styles.commentForm}>
