@@ -118,6 +118,7 @@ const MyProfile = () => {
                 </div>
 
                 <button className="profile-edit-button">Edit profile</button>
+
             </div>
 
 
@@ -132,9 +133,6 @@ const MyProfile = () => {
                 </div> :
                 <p className="bigMessage">Todavía no has publicado nada</p>
             }
-
-
-
 
             <Footer />
 
