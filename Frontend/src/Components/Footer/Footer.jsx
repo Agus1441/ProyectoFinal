@@ -37,7 +37,8 @@ const Footer = () => {
                         <FaUserCircle className="footer-icon" />
                         <span>Profile</span>
                     </Link>
-                </nav>
+                    <Logout></Logout>
+                </nav> 
             </div>
         );
     }
