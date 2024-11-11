@@ -49,6 +49,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
     else{
         useEffect(() => {
             setPostData({
+                _id: postId,
                 publisher: publisher,
                 caption: caption,
                 likes: likes,
@@ -68,7 +69,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
 
     const handleLike = async () => {
         try {
-            const response = await likePost(pId);
+            const response = await likePost(postData._id);
             if (response.success) {
                 setLiked(!liked);
             } else {
@@ -81,7 +82,7 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
-        const result = await commentPost(newComment, pId);
+        const result = await commentPost(newComment, postData._id);
         if (result.success) {
             setNewComment('');
             setCommenting(false);
