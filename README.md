@@ -15,6 +15,6 @@
 7) Una vez escritos los comandos anteriores, abre una nueva terminal sin cerrar la anterior e ingresa los siguientes comandos:
     - cd Frontend
     - npm install
-    - npm run dev (Si todo está correcto, en la terminal debería aparecer el enlace a la aplicación ("http://localhost:5173/"))
+    - npm run dev (Si todo está correcto, en la terminal debería aparecer el enlace a la aplicación "http://localhost:5173/")
 8) Abre algún navegador en tu ordenador e ingresa el enlace que apareció en la terminal.
 9) Si el programa funciona como debería, en el navegador se mostrará una página para iniciar sesión. En esta página, deberás elegir la opción para registrarte (la primera vez).
