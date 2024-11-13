@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import RegisterModal from '../../Components/Register/Modal';
+import  './Register.css';
 
 
 const RegisterPage = () => {

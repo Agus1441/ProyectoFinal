@@ -7,7 +7,7 @@ import './../../Components/Register/Modal.css';
 
 const Login = () => {
     
-    //Redireccionamiento al feed si ya está loggeado 
+    // Redireccionamiento al feed si ya está loggeado 
     const navigate = useNavigate();
     useEffect(() => {
         
@@ -35,7 +35,7 @@ const Login = () => {
     };
 
     return (
-        <div className="container">
+        <div className="login-container">
             <div className="login-box">
                 <h1>Fakestagram</h1>
                 <form onSubmit={handleSubmit}>
@@ -73,5 +73,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
