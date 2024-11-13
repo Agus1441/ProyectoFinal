@@ -101,7 +101,7 @@ body {
 }
 
 .message a {
-    color: black !important; /* Se asegura que el color negro se aplique */
+    color: black !important; 
     text-decoration: none;
     font-weight: bold;
 }
