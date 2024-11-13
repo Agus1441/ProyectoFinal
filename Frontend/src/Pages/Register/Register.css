@@ -1,0 +1,89 @@
+/* General Layout */
+
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Caja de registro */
+.register-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff00cc, #3333ff);
+    color: white;
+}
+
+/* Título con color degradado */
+.register-box h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* Campos de entrada */
+.textbox {
+    margin-bottom: 20px;
+}
+
+.textbox input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    color: #555;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Botón de registro */
+.btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #ff5858, #f857a6);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #f857a6, #ff5858);
+}
+
+/* Mensaje de error */
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Enlace de inicio de sesión */
+.message {
+    margin-top: 20px;
+    font-size: 14px;
+    color: white;
+}
+
+.message a {
+    color: #ffccff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.message a:hover {
+    text-decoration: underline;
+}
