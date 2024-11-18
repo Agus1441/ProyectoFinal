@@ -48,7 +48,7 @@ const Footer = () => {
                 <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Feed" className="icon" />
             </button>
             <button onClick={() => navigate("/myprofile")}>
-                <img src="https://i.pinimg.com/736x/37/8a/27/378a270e775265622393da8c0527417e.jpg" alt="Profile" className="profile-picture" />
+                <img src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png" alt="Profile" className="profile-picture" />
             </button>
         </div>
     );
