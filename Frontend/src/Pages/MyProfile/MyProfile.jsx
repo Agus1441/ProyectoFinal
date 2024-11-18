@@ -8,6 +8,7 @@ import { getPosts, uploadPost } from "../../Services/PostsService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
 import MoreOptions from "../../Components/MoreOptions/MoreOptions";
 import { backendURL } from "../../Constants";
+import EditProfile from "../../Components/EditProfile/EditProfile";
 
 const MyProfile = () => {
     const navigate = useNavigate();
@@ -16,6 +17,8 @@ const MyProfile = () => {
     const [myPosts, setMyPosts] = useState([]);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
     const [file, setFile] = useState();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -106,7 +109,22 @@ const MyProfile = () => {
                         <p>Friends</p>
                     </div>
                 </div>
-                <button className="profile-edit-button">Edit profile</button>
+                <button className="profile-edit-button" onClick={() => setIsEditModalOpen(true)}>Editar perfil</button>
+                {isEditModalOpen && (
+                    <EditProfile
+                        user={user}
+                        onClose={() => setIsEditModalOpen(false)}
+                        onUpdate={() => {
+                            // Recargar datos del usuario
+                            const fetchUser = async () => {
+                                const userObject = await getUser(userId);
+                                setUser(userObject.data.user);
+                            };
+                            fetchUser();
+                        }}
+                    />
+                )}
+
             </div>
             {myPosts.length > 0 ? (
                 <div className="profile-posts">{
