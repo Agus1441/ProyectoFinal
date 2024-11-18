@@ -19,6 +19,7 @@ const Comment = ({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await getComment(id);
+            console.log(id)
             const comment = response.data;
             setCommentData(comment);
             setUserData(comment.user);

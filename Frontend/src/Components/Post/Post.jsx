@@ -206,8 +206,8 @@ const Post = ({ postId, publisher, caption, likes, createdAt, imageUrl, comments
                     : `Ver los ${postData.comments?.length || 0} comentarios`}
             </div>
 
-            {showComments && postData.comments.map((commentId) => (
-                <Comment key={commentId} id={commentId} />
+            {showComments && postData.comments.map((comment) => (
+                <Comment key={comment._id} id={comment._id} />
             ))}
 
             {commenting && (
