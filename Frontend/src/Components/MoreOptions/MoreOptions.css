@@ -1,0 +1,38 @@
+/* MoreOptions.css */
+.more-options {
+    position: relative;
+    margin-left: auto;
+}
+
+.three-dots {
+    background: none;
+    border: none;
+    cursor: pointer;
+    float: right;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 8px;
+    text-align: left;
+}

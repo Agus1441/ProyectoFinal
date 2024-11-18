@@ -7,6 +7,7 @@
   gap: 16px;
   padding: 16px;
   background-color: white;
+  height: 100vh;
   margin-bottom: 80px; /* Asegura que el feed no quede detrás del footer */
 }
 
@@ -15,15 +16,15 @@
     flex-direction: column;
     gap: 1rem;
     padding-top: 1rem;
-    margin-top: 36rem;
+    align-items: center;
+    overflow: auto;
+    width: 100%;
 }
 
 .feed-item {
   width: 100%; /* Asegura que el post ocupe el 100% del ancho de su contenedor */
   max-width: 600px; /* Limita el ancho máximo para que no sea muy grande */
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
 }
 

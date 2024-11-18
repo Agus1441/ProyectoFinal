@@ -1,3 +1,4 @@
+// MyProfile.js
 import React, { useEffect, useState } from "react";
 import './MyProfile.css';
 import Footer from "../../Components/Footer/Footer";
@@ -5,9 +6,8 @@ import { getUser } from "../../Services/UsersService";
 import { useNavigate } from "react-router-dom";
 import { getPosts, uploadPost } from "../../Services/PostsService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
-import Logout from "../../Components/Logout/logout";
+import MoreOptions from "../../Components/MoreOptions/MoreOptions";
 import { backendURL } from "../../Constants";
-
 
 const MyProfile = () => {
     const navigate = useNavigate();
@@ -31,7 +31,6 @@ const MyProfile = () => {
         } else {
             const fetchUser = async () => {
                 const userObject = await getUser(userId);
-                console.log(userObject);
                 setUser(userObject.data.user);
                 setMyPosts(userObject.data.posts);
             };
@@ -87,25 +86,16 @@ const MyProfile = () => {
     return (
         user && <div className="profile">
             <div className="profile-header">
-
-                <img src={user.profilePicture || defaultPhoto} alt="Profile" className="profile-picture" />
-
-                {isDesktop ? null :
+                <div className="profile-header-content">
                     <button className="upload-button" onClick={openModal}>
-                        <img src="https://static-00.iconduck.com/assets.00/camera-icon-2048x1821-0b66mmq3.png" alt="Camera" className="icon upload-icon" />
+                        <img src="https://static-00.iconduck.com/assets.00/upload-icon-2048x2048-eu9n5hco.png" alt="upload" className="icon upload-icon" />
                     </button>
-                }
-
-
-
-
+                    <MoreOptions />
+                </div>
+                <img src={user.profilePicture || defaultPhoto} alt="Profile" className="profile-picture" />
                 <div className="profile-info">
                     <h2>{user.username}</h2>
                 </div>
-
-
-
-
                 <div className="profile-stats">
                     <div>
                         <span>{myPosts?.length || 0}</span>
@@ -116,26 +106,20 @@ const MyProfile = () => {
                         <p>Friends</p>
                     </div>
                 </div>
-
                 <button className="profile-edit-button">Edit profile</button>
-
             </div>
-
-
-            {myPosts.length > 0 ?
+            {myPosts.length > 0 ? (
                 <div className="profile-posts">{
                     myPosts.map((post) => (
                         <div key={post._id} className="profile-post">
                             <img src={backendURL + post.imageUrl} alt="Post" className="post-image" onClick={() => { navigate(`/posts/${post._id}`) }} />
                         </div>
                     ))
-                }
-                </div> :
+                }</div>
+            ) : (
                 <p className="bigMessage">Todavía no has publicado nada</p>
-            }
-
+            )}
             <Footer />
-
             {isModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
