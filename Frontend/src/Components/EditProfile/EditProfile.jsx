@@ -28,20 +28,14 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
             return;
         }
     
-        const formData = new FormData();
-        formData.append("username", updatedName);
-        if (file) {
-            formData.append("profilePicture", file);
-        }
-    
-        console.log("Datos enviados al servidor:", {
-            id: user._id,
+        const formData = {
             username: updatedName,
             profilePicture: file ? file.name : null,
-        });
+        }
+        console.log("Datos enviados al servidor:", formData);
     
         try {
-            const response = await putUser(user._id, formData); 
+            const response = await putUser(formData); 
             console.log("Respuesta del servidor:", response);
             if (response.success) {
                 onUpdate(); 
