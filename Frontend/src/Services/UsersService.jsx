@@ -1,5 +1,3 @@
-// src/Services/UsersService.jsx
-
 import { backendURL } from "../Constants";
 
 const URL = `${backendURL}api/`;

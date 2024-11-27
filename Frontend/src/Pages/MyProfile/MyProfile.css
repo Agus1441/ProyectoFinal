@@ -1,4 +1,3 @@
-/* Estilo para el contenedor del perfil */
 .profile {
   max-width: 500px;
   margin: 0 auto;
@@ -7,7 +6,6 @@
   background-color: white;
 }
 
-/* Estilo para el encabezado del perfil */
 .profile-header {
   position: relative;
   display: flex;
@@ -18,7 +16,6 @@
   padding-bottom: 20px;
 }
 
-/* Contenedor para alinear botones "Más opciones" y "Subir" */
 .profile-header-content {
   display: flex;
   justify-content: flex-end;
@@ -26,7 +23,6 @@
   width: 100%;
 }
 
-/* Botón de subir sin fondo y con ícono */
 .upload-button {
   background: none;
   border: none;
@@ -37,7 +33,6 @@
   margin-right: 10px;
 }
 
-/* Icono de subir y "Más opciones" */
 .icon {
   width: 36px;
   height: 36px;
@@ -49,7 +44,6 @@
   opacity: 1;
 }
 
-/* Estilo de la imagen de perfil */
 .profile-picture {
   width: 100px;
   height: 100px;

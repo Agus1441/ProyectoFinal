@@ -8,7 +8,7 @@
   padding: 16px;
   background-color: white;
   height: 100vh;
-  margin-bottom: 80px; /* Asegura que el feed no quede detrás del footer */
+  margin-bottom: 80px;
 }
 
 .feed-content {
@@ -23,15 +23,15 @@
 }
 
 .feed-item {
-  width: 100%; /* Asegura que el post ocupe el 100% del ancho de su contenedor */
-  max-width: 600px; /* Limita el ancho máximo para que no sea muy grande */
+  width: 100%;
+  max-width: 600px;
   background-color: #fff;
   margin-bottom: 10px;
 }
 
 .feed-item img {
-  width: 100%; /* Ajusta la imagen para ocupar todo el ancho del contenedor */
-  height: auto; /* Mantiene la proporción de la imagen */
+  width: 100%;
+  height: auto;
 }
 
 .feed-item .post-details {

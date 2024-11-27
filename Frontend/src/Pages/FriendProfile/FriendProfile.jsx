@@ -5,7 +5,7 @@ import { getUser } from "../../Services/UsersService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const FriendProfile = () => {
-  const { friendId } = useParams(); // Obtiene el ID del amigo desde la URL
+  const { friendId } = useParams();
   const [friend, setFriend] = useState({});
   const [friendPosts, setFriendPosts] = useState([]);
 

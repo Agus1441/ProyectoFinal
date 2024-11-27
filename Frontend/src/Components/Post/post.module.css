@@ -7,7 +7,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     color: #4a4a4a;
-    /* Gris oscuro para el texto */
 }
 
 .profileInfo {
@@ -54,7 +53,6 @@
 
 .actions {
     display: flex;
-    /* Espaciado entre Like y Comentar */
     margin-top: 8px;
 }
 
@@ -64,7 +62,6 @@
     cursor: pointer;
     padding: 4px;
     color: #4a4a4a;
-    /* Color gris oscuro */
 }
 
 .commentSection {
@@ -86,26 +83,19 @@
     flex-grow: 1;
     padding: 6px;
     border: 1px solid #4a4a4a;
-    /* Borde gris oscuro */
     border-radius: 4px;
     background-color: #fff;
-    /* Fondo blanco */
     color: #4a4a4a;
-    /* Texto gris oscuro */
 }
 
 .submitButton {
     padding: 6px 12px;
     background-color: #fff;
-    /* Fondo blanco */
     color: #4a4a4a;
-    /* Texto gris oscuro */
     border: 1px solid #4a4a4a;
-    /* Borde gris oscuro */
     border-radius: 4px;
     cursor: pointer;
     margin-left: 8px;
-    /* Más separación del input */
 }
 
 .modal {
@@ -119,7 +109,6 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Fondo semi-transparente */
 }
 
 .modalContent {

@@ -1,4 +1,3 @@
-// MyProfile.js
 import React, { useEffect, useState } from "react";
 import './MyProfile.css';
 import Footer from "../../Components/Footer/Footer";

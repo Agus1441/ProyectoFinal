@@ -1,5 +1,3 @@
-// src/Components/EditProfile/EditProfile.jsx
-
 import React, { useState } from "react";
 import './EditProfile.css';
 import { putUser } from "../../Services/UsersService";
