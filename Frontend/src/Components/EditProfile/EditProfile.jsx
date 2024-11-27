@@ -50,7 +50,7 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
         console.log("Datos enviados al servidor:", data);
 
         try {
-            const response = await putUser('/api/user/profile/edit', data);
+            const response = await putUser('http://localhost:3001/api/user/profile/edit', data);
             console.log("Respuesta del servidor:", response);
             if (response.success) {
                 onUpdate();
