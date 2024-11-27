@@ -90,7 +90,7 @@ const MyProfile = () => {
             <div className="profile-header">
                 <div className="profile-header-content">
                     <button className="upload-button" onClick={openModal}>
-                        <img src="https://static-00.iconduck.com/assets.00/upload-icon-2048x2048-eu9n5hco.png" alt="upload" className="icon upload-icon" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYVvA5JxLDpsS4sb9IPDKzLYXmAqCD00VUdQ&s" alt="upload" className="icon upload-icon" />
                     </button>
                     <MoreOptions />
                 </div>

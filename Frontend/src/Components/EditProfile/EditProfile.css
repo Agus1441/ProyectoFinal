@@ -24,6 +24,7 @@
     align-items: center;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
+    color: black;
 }
 
 
@@ -103,6 +104,7 @@
     .edit-profile-content {
         padding: 1.5rem;
         gap: 1rem;
+        color: black
     }
 
     .edit-profile-picture {
@@ -141,4 +143,11 @@
         font-size: 0.875rem;
         padding: 0.5rem;
     }
+}
+
+.h3{
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: black;
 }

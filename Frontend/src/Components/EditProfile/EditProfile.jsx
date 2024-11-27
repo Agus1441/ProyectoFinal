@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import './EditProfile.css';
-import { putUser } from "../../Services/UsersService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
 
 const EditProfile = ({ user, onClose, onUpdate }) => {
     const [updatedName, setUpdatedName] = useState(user?.username || "");
-    const [profilePicture, setProfilePicture] = useState(user?.profilePicture || defaultPhoto);
-    const [file, setFile] = useState(null);
+    const [profilePicture, setProfilePicture] = useState(user?.profilePicture || "");
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleNameChange = (event) => {
         setUpdatedName(event.target.value);
     };
 
-    const handleImageChange = (event) => {
-        const fileUploaded = event.target.files[0];
-        if (fileUploaded) {
-            setProfilePicture(URL.createObjectURL(fileUploaded));
-            setFile(fileUploaded);
-            setErrorMessage("");
+    const handlePictureLinkChange = (event) => {
+        setProfilePicture(event.target.value);
+    };
+
+    const putUser = async (url, data) => {
+        try {
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Error en putUser:", error);
+            throw error;
         }
     };
 
@@ -27,34 +41,27 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
             setErrorMessage("El nombre no puede estar vacío.");
             return;
         }
-    
-        const formData = new FormData();
-        formData.append("username", updatedName);
-        if (file) {
-            formData.append("profilePicture", file);
-        }
-    
-        console.log("Datos enviados al servidor:", {
-            id: user._id,
+
+        const data = {
             username: updatedName,
-            profilePicture: file ? file.name : null,
-        });
-    
+            profilePicture: profilePicture.trim() || user.profilePicture,
+        };
+
+        console.log("Datos enviados al servidor:", data);
+
         try {
-            const response = await putUser(user._id, formData); 
+            const response = await putUser('/api/user/profile/edit', data);
             console.log("Respuesta del servidor:", response);
             if (response.success) {
-                onUpdate(); 
-                onClose(); 
+                onUpdate();
+                onClose();
             } else {
                 setErrorMessage(response.message);
             }
         } catch (error) {
-            console.error("Error en handleSubmit:", error);
             setErrorMessage("Hubo un error al actualizar el perfil.");
         }
     };
-
 
     return (
         <div className="edit-profile-modal">
@@ -62,8 +69,13 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
                 <h2>Editar Perfil</h2>
                 <div className="edit-profile-section">
                     <h3>Foto de Perfil</h3>
-                    <img src={profilePicture} alt="Profile" className="edit-profile-picture" />
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                    <input
+                        type="text"
+                        value={profilePicture}
+                        onChange={handlePictureLinkChange}
+                        placeholder="Link de la foto de perfil"
+                        className="edit-profile-input"
+                    />
                 </div>
                 <div className="edit-profile-section">
                     <h3>Nombre de Usuario</h3>

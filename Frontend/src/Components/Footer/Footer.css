@@ -95,7 +95,9 @@
 
 @media (max-width: 768px) {
   .footer .profile-picture {
-    margin-right: 0;
-    margin-top: 1px;
+    margin-right: 10px;
+    margin-top: 5px;
+    transform: translate(-25px, 2px); /* Mueve hacia abajo y a la izquierda */
+
   }
 }
