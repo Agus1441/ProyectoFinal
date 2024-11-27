@@ -90,7 +90,11 @@ const MyProfile = () => {
             <div className="profile-header">
                 <div className="profile-header-content">
                     <button className="upload-button" onClick={openModal}>
+<<<<<<< HEAD
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYVvA5JxLDpsS4sb9IPDKzLYXmAqCD00VUdQ&s" alt="upload" className="icon upload-icon" />
+=======
+                        <img src="https://pic.onlinewebfonts.com/thumbnails/icons_193050.svg" alt="upload" className="icon upload-icon" />
+>>>>>>> 6a0d17f43d093db0a01d1fe254e00fb1b21ee2d8
                     </button>
                     <MoreOptions />
                 </div>

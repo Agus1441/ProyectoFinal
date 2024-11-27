@@ -104,20 +104,21 @@ export const getUser = async (id) => {
     }
 };
 
-export const putUser = async (id, formData) => {
+export const putUser = async (formData) => {
     try {
         const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
 
-        if (!token) {
-            return { success: false, message: 'Token no disponible. Por favor, inicia sesión.' };
+        if (!token || !userId) {
+            return { success: false, message: 'Token o id no disponible. Por favor, inicia sesión.' };
         }
-
-        const res = await fetch(`${URL}user/profile/edit/${id}`, {
+        console.log(formData);
+        const res = await fetch(`${URL}user/profile/edit`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
-            body: formData,
+            body: JSON.stringify(formData),
         });
 
         if (res.status === 400) {
