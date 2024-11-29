@@ -3,7 +3,6 @@ import './MyProfile.css';
 import Footer from "../../Components/Footer/Footer";
 import { getUser } from "../../Services/UsersService";
 import { useNavigate } from "react-router-dom";
-import { getPosts, uploadPost } from "../../Services/PostsService";
 import defaultPhoto from "../../assets/defaultpic.jpg";
 import MoreOptions from "../../Components/MoreOptions/MoreOptions";
 import { backendURL } from "../../Constants";
@@ -18,7 +17,6 @@ const MyProfile = () => {
     const [file, setFile] = useState();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-
     useEffect(() => {
         const handleResize = () => {
             setIsDesktop(window.innerWidth >= 1024);
@@ -27,15 +25,16 @@ const MyProfile = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    const fetchUser = async () => {
+        const userObject = await getUser(userId);
+        setUser(userObject.data.user);
+        setMyPosts(userObject.data.posts);
+    };
+
     useEffect(() => {
         if (!userId) {
             navigate('/');
         } else {
-            const fetchUser = async () => {
-                const userObject = await getUser(userId);
-                setUser(userObject.data.user);
-                setMyPosts(userObject.data.posts);
-            };
             fetchUser();
         }
     }, [userId, navigate]);
@@ -79,9 +78,6 @@ const MyProfile = () => {
             return;
         }
 
-        console.log(newPostData);
-        console.log(uploadPost(file, newPostData.description || "Nueva publicación"));
-
         closeModal();
     };
 
@@ -90,11 +86,7 @@ const MyProfile = () => {
             <div className="profile-header">
                 <div className="profile-header-content">
                     <button className="upload-button" onClick={openModal}>
-<<<<<<< HEAD
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYVvA5JxLDpsS4sb9IPDKzLYXmAqCD00VUdQ&s" alt="upload" className="icon upload-icon" />
-=======
-                        <img src="https://pic.onlinewebfonts.com/thumbnails/icons_193050.svg" alt="upload" className="icon upload-icon" />
->>>>>>> 6a0d17f43d093db0a01d1fe254e00fb1b21ee2d8
                     </button>
                     <MoreOptions />
                 </div>
@@ -117,17 +109,9 @@ const MyProfile = () => {
                     <EditProfile
                         user={user}
                         onClose={() => setIsEditModalOpen(false)}
-                        onUpdate={() => {
-                            // Recargar datos del usuario
-                            const fetchUser = async () => {
-                                const userObject = await getUser(userId);
-                                setUser(userObject.data.user);
-                            };
-                            fetchUser();
-                        }}
+                        onUpdate={() => fetchUser()}
                     />
                 )}
-
             </div>
             {myPosts.length > 0 ? (
                 <div className="profile-posts">{

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './EditProfile.css';
-import defaultPhoto from "../../assets/defaultpic.jpg";
 
 const EditProfile = ({ user, onClose, onUpdate }) => {
     const [updatedName, setUpdatedName] = useState(user?.username || "");
@@ -15,25 +14,21 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
         setProfilePicture(event.target.value);
     };
 
-    const putUser = async (url, data) => {
-        try {
-            const response = await fetch(url, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
+    const putUser = async (url, data, token) => {
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        });
 
-            if (!response.ok) {
-                throw new Error(`Error en la solicitud: ${response.statusText}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error("Error en putUser:", error);
-            throw error;
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
         }
+
+        return await response.json();
     };
 
     const handleSubmit = async () => {
@@ -47,14 +42,22 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
             profilePicture: profilePicture.trim() || user.profilePicture,
         };
 
-        console.log("Datos enviados al servidor:", data);
-
         try {
-            const response = await putUser('http://localhost:3001/api/user/profile/edit', data);
-            console.log("Respuesta del servidor:", response);
+            const token = localStorage.getItem("token");
+            if (!token) {
+                setErrorMessage("No estás autenticado. Por favor, inicia sesión.");
+                return;
+            }
+
+            const response = await putUser(
+                'http://localhost:3001/api/user/profile/edit',
+                data,
+                token
+            );
+
             if (response.success) {
-                onUpdate();
-                onClose();
+                onUpdate(); // Actualiza los datos en el perfil
+                onClose();  // Cierra el modal
             } else {
                 setErrorMessage(response.message);
             }
